@@ -189,14 +189,14 @@ puoi visualizzarli navigando dal menu “Componenti”:</p>
 <p>Per utilizzare i componenti all’interno del tuo sito è necessario<br>
 includere, oltre l’HTML, i fogli di stile (CSS) e i Javascript (JS) necessari.</p>
 <p>Puoi scaricare i file CSS / JS già compilati da incorporare in ogni pagina:<br>
-<strong><a href="https://github.com/italia/design-web-toolkit/tree/gh-pages/design-web-toolkit/build">CSS / Javascript già compilati</a></strong></p>
+<strong><a href="https://github.com/italia/design-web-toolkit/tree/gh-pages/build">CSS / Javascript già compilati</a></strong></p>
 <p>In produzione vanno inclusi i file:</p>
 <code><pre>.
 ├── build<span class="hljs-selector-class">.css</span>
 ├── vendor/modernizr<span class="hljs-selector-class">.js</span>
 ├── vendor/jquery<span class="hljs-selector-class">.min</span><span class="hljs-selector-class">.js</span>
 └── IWT<span class="hljs-selector-class">.min</span><span class="hljs-selector-class">.js</span></pre></code><p>facendo riferimento al
-<strong><a href="https://raw.githubusercontent.com/italia/design-web-toolkit/gh-pages/design-web-toolkit/build/index.html">template generico di esempio</a></strong></p>
+<strong><a href="https://raw.githubusercontent.com/italia/design-web-toolkit/gh-pages/build/index.html">template generico di esempio</a></strong></p>
 <h3 id="file-javascript-di-componenti-opzionali">File Javascript di componenti opzionali</h3>
 <p>I file contenuti nella directory <code>build</code> del tipo</p>
 <code><pre>├── <span class="hljs-number">0</span><span class="hljs-selector-class">.chunk</span><span class="hljs-selector-class">.js</span>
@@ -208,7 +208,7 @@ finale del file <code>IWT.min.js</code> riducendo quindi i tempi di download e p
 <p>Tail file devono esser presenti nella stessa directory dove è contenuto il file <code>IWT.min.js</code>;
 se il percorso di questa directory differisce da quello di default (<code>/build</code>), è necessario specificare
 il percorso alternativo, <strong>relativo alla radice del sito web</strong>, come visibile nel
-<strong><a href="https://raw.githubusercontent.com/italia/design-web-toolkit/gh-pages/design-web-toolkit/build/index.html">template generico di esempio</a></strong>:</p>
+<strong><a href="https://raw.githubusercontent.com/italia/design-web-toolkit/gh-pages/build/index.html">template generico di esempio</a></strong>:</p>
 <code><pre><span class="hljs-comment">&lt;!-- sostituire questo percorso con quello
      degli assets javascript nel proprio sito web:
      è il percorso, relativo alla webroot, della directory
