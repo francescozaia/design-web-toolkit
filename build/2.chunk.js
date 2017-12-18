@@ -1,5 +1,2239 @@
-webpackJsonpIWT([2],{45:function(e,t,n){"use strict";var a,s;/*! Tablesaw - v3.0.6 - 2017-11-20
+webpackJsonpIWT([2],{
+
+/***/ 45:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+/*! Tablesaw - v3.0.6 - 2017-11-20
 * https://github.com/filamentgroup/tablesaw
 * Copyright (c) 2017 Filament Group; Licensed MIT */
-!function(o,l){a=[n(0)],void 0!==(s=function(e){return o.Tablesaw=l(e,o)}.apply(t,a))&&(e.exports=s)}("undefined"!=typeof window?window:void 0,function(e,t){var n=!1;document.addEventListener("DOMContentLoaded",function(){n=!0});var a={i18n:{modeStack:"Stack",modeSwipe:"Swipe",modeToggle:"Toggle",modeSwitchColumnsAbbreviated:"Cols",modeSwitchColumns:"Columns",columnToggleButton:"Columns",columnToggleError:"No eligible columns.",sort:"Sort",swipePreviousColumn:"Previous column",swipeNextColumn:"Next column"},mustard:"head"in document&&(!window.blackberry||window.WebKitPoint)&&!window.operamini,$:e,_init:function(e){a.$(e||document).trigger("enhance.tablesaw")},init:function(e){n?a._init(e):"addEventListener"in document&&document.addEventListener("DOMContentLoaded",function(){a._init(e)})}};return e(t.document).on("enhance.tablesaw",function(){"undefined"!=typeof TablesawConfig&&TablesawConfig.i18n&&(a.i18n=e.extend(a.i18n,TablesawConfig.i18n||{})),a.i18n.modes=[a.i18n.modeStack,a.i18n.modeSwipe,a.i18n.modeToggle]}),a.mustard&&e(document.documentElement).addClass("tablesaw-enhanced"),function(){var n={toolbar:"tablesaw-bar"},s={create:"tablesawcreate",destroy:"tablesawdestroy",refresh:"tablesawrefresh",resize:"tablesawresize"},o={};a.events=s;var l=function(t){if(!t)throw new Error("Tablesaw requires an element.");this.table=t,this.$table=e(t),this.$thead=this.$table.children().filter("thead").eq(0),this.$tbody=this.$table.children().filter("tbody"),this.mode=this.$table.attr("data-tablesaw-mode")||"stack",this.$toolbar=null,this.attributes={subrow:"data-tablesaw-subrow",ignorerow:"data-tablesaw-ignorerow"},this.init()};l.prototype.init=function(){if(!this.$thead.length)throw new Error("tablesaw: a <thead> is required, but none was found.");if(!this.$thead.find("th").length)throw new Error("tablesaw: no header cells found. Are you using <th> inside of <thead>?");this.$table.attr("id")||this.$table.attr("id","tablesaw-"+Math.round(1e4*Math.random())),this.createToolbar(),this._initCells(),this.$table.data("tablesaw",this),this.$table.trigger(s.create,[this])},l.prototype.getConfig=function(t){var n=e.extend(o,t||{});return e.extend(n,"undefined"!=typeof TablesawConfig?TablesawConfig:{})},l.prototype._getPrimaryHeaderRow=function(){return this._getHeaderRows().eq(0)},l.prototype._getHeaderRows=function(){return this.$thead.children().filter("tr").filter(function(){return!e(this).is("[data-tablesaw-ignorerow]")})},l.prototype._getRowIndex=function(e){return e.prevAll().length},l.prototype._getHeaderRowIndeces=function(){var t=this,n=[];return this._getHeaderRows().each(function(){n.push(t._getRowIndex(e(this)))}),n},l.prototype._getPrimaryHeaderCells=function(e){return(e||this._getPrimaryHeaderRow()).find("th")},l.prototype._$getCells=function(t){var n=this;return e(t).add(t.cells).filter(function(){var t=e(this),a=t.parent(),s=t.is("[colspan]");return!(a.is("["+n.attributes.subrow+"]")||a.is("["+n.attributes.ignorerow+"]")&&s)})},l.prototype._getVisibleColspan=function(){var t=0;return this._getPrimaryHeaderCells().each(function(){var n=e(this);"none"!==n.css("display")&&(t+=parseInt(n.attr("colspan"),10)||1)}),t},l.prototype.getColspanForCell=function(t){var n=this._getVisibleColspan(),a=0;return t.closest("tr").data("tablesaw-rowspanned")&&a++,t.siblings().each(function(){var t=e(this),n=parseInt(t.attr("colspan"),10)||1;"none"!==t.css("display")&&(a+=n)}),n-a},l.prototype.isCellInColumn=function(t,n){return e(t).add(t.cells).filter(function(){return this===n}).length},l.prototype.updateColspanCells=function(t,n,a){var s=this,o=s._getPrimaryHeaderRow();this.$table.find("[rowspan][data-tablesaw-priority]").each(function(){var t=e(this);if("persist"===t.attr("data-tablesaw-priority")){var n=t.closest("tr"),a=parseInt(t.attr("rowspan"),10);a>1&&(n=n.next(),n.data("tablesaw-rowspanned",!0),a--)}}),this.$table.find("[colspan],[data-tablesaw-maxcolspan]").filter(function(){return e(this).closest("tr")[0]!==o[0]}).each(function(){var o=e(this);if(void 0===a||s.isCellInColumn(n,this)){var l=s.getColspanForCell(o);t&&void 0!==a&&o[0===l?"addClass":"removeClass"](t);var i=parseInt(o.attr("data-tablesaw-maxcolspan"),10);i?l>i&&(l=i):o.attr("data-tablesaw-maxcolspan",o.attr("colspan")),o.attr("colspan",l)}})},l.prototype._findPrimaryHeadersForCell=function(e){for(var t=this._getPrimaryHeaderRow(),n=this._getPrimaryHeaderCells(t),a=this._getRowIndex(t),s=[],o=0;o<this.headerMapping.length;o++)if(o!==a)for(var l=0;l<this.headerMapping[o].length;l++)this.headerMapping[o][l]===e&&s.push(n[l]);return s},l.prototype.getRows=function(){var t=this;return this.$table.find("tr").filter(function(){return e(this).closest("table").is(t.$table)})},l.prototype.getBodyRows=function(t){return(t?e(t):this.$tbody).children().filter("tr")},l.prototype.getHeaderCellIndex=function(e){for(var t=this.headerMapping[0],n=0;n<t.length;n++)if(t[n]===e)return n;return-1},l.prototype._initCells=function(){this.$table.find("[data-tablesaw-maxcolspan]").each(function(){var t=e(this);t.attr("colspan",t.attr("data-tablesaw-maxcolspan"))});var t=this.getRows(),n=[];t.each(function(e){n[e]=[]}),t.each(function(t){var a=0;e(this).children().each(function(){for(var e=parseInt(this.getAttribute("data-tablesaw-maxcolspan")||this.getAttribute("colspan"),10),s=parseInt(this.getAttribute("rowspan"),10);n[t][a];)a++;if(n[t][a]=this,e)for(var o=0;o<e-1;o++)a++,n[t][a]=this;if(s)for(var l=1;l<s;l++)n[t+l][a]=this;a++})});for(var a=this._getHeaderRowIndeces(),s=0;s<n[0].length;s++)for(var o=0,l=a.length;o<l;o++){var i,r=n[a[o]][s],c=a[o];for(r.cells||(r.cells=[]);c<n.length;)i=n[c][s],r!==i&&r.cells.push(i),c++}this.headerMapping=n},l.prototype.refresh=function(){this._initCells(),this.$table.trigger(s.refresh,[this])},l.prototype._getToolbarAnchor=function(){var e=this.$table.parent();return e.is(".tablesaw-overflow")?e:this.$table},l.prototype._getToolbar=function(e){return e||(e=this._getToolbarAnchor()),e.prev().filter("."+n.toolbar)},l.prototype.createToolbar=function(){var t=this._getToolbarAnchor(),a=this._getToolbar(t);a.length||(a=e("<div>").addClass(n.toolbar).insertBefore(t)),this.$toolbar=a,this.mode&&this.$toolbar.addClass("tablesaw-mode-"+this.mode)},l.prototype.destroy=function(){this._getToolbar().each(function(){this.className=this.className.replace(/\btablesaw-mode\-\w*\b/gi,"")});var t=this.$table.attr("id");e(document).off("."+t),e(window).off("."+t),this.$table.trigger(s.destroy,[this]),this.$table.removeData("tablesaw")},e.fn.tablesaw=function(){return this.each(function(){e(this).data("tablesaw")||new l(this)})};var i=e(t.document);i.on("enhance.tablesaw",function(t){a.mustard&&e(t.target).find("table").filter("[data-tablesaw],[data-tablesaw-mode],[data-tablesaw-sortable]").tablesaw()});var r,c=!1;i.on("scroll.tablesaw",function(){c=!0,t.clearTimeout(r),r=t.setTimeout(function(){c=!1},300)});var d;e(t).on("resize",function(){c||(t.clearTimeout(d),d=t.setTimeout(function(){i.trigger(s.resize)},150))}),a.Table=l}(),function(){var t={stackTable:"tablesaw-stack",cellLabels:"tablesaw-cell-label",cellContentLabels:"tablesaw-cell-content"},n={key:"tablesaw-stack"},s={labelless:"data-tablesaw-no-labels",hideempty:"data-tablesaw-hide-empty"},o=function(t,a){this.tablesaw=a,this.$table=e(t),this.labelless=this.$table.is("["+s.labelless+"]"),this.hideempty=this.$table.is("["+s.hideempty+"]"),this.$table.data(n.key,this)};o.prototype.init=function(){if(this.$table.addClass(t.stackTable),!this.labelless){var n=this;this.$table.find("th, td").filter(function(){return!e(this).closest("thead").length}).filter(function(){return!(e(this).closest("tr").is("["+s.labelless+"]")||n.hideempty&&!e(this).html())}).each(function(){var a=e(document.createElement("b")).addClass(t.cellLabels),s=e(this);e(n.tablesaw._findPrimaryHeadersForCell(this)).each(function(t){var n=e(this.cloneNode(!0)),s=n.find(".tablesaw-sortable-btn");n.find(".tablesaw-sortable-arrow").remove();var o=n.find("[data-tablesaw-checkall]");if(o.closest("label").remove(),o.length)return void(a=e([]));t>0&&a.append(document.createTextNode(", ")),a.append(s.length?s[0].childNodes:n[0].childNodes)}),a.length&&!s.find("."+t.cellContentLabels).length&&s.wrapInner("<span class='"+t.cellContentLabels+"'></span>");var o=s.find("."+t.cellLabels);o.length?o.replaceWith(a):s.prepend(a)})}},o.prototype.destroy=function(){this.$table.removeClass(t.stackTable),this.$table.find("."+t.cellLabels).remove(),this.$table.find("."+t.cellContentLabels).each(function(){e(this).replaceWith(this.childNodes)})},e(document).on(a.events.create,function(e,t){if("stack"===t.mode){new o(t.table,t).init()}}).on(a.events.refresh,function(t,a){"stack"===a.mode&&e(a.table).data(n.key).init()}).on(a.events.destroy,function(t,a){"stack"===a.mode&&e(a.table).data(n.key).destroy()}),a.Stack=o}(),function(){var t="tablesawbtn",n={_create:function(){return e(this).each(function(){e(this).trigger("beforecreate.tablesawbtn")[t]("_init").trigger("create.tablesawbtn")})},_init:function(){var n=e(this),a=this.getElementsByTagName("select")[0];return a&&e(this).addClass("btn-select tablesaw-btn-select")[t]("_select",a),n},_select:function(t){var n=function(t,n){var a,s,o=e(n).find("option"),l=document.createElement("span"),i=!1;if(l.setAttribute("aria-hidden","true"),l.innerHTML="&#160;",o.each(function(){var e=this;e.selected&&(l.innerHTML=e.text)}),s=t.childNodes,o.length>0){for(var r=0,c=s.length;r<c;r++)(a=s[r])&&"SPAN"===a.nodeName.toUpperCase()&&(t.replaceChild(l,a),i=!0);i||t.insertBefore(l,t.firstChild)}};n(this,t),e(this).on("change refresh",function(){n(this,t)})}};e.fn[t]=function(n,a,s,o){return this.each(function(){return n&&"string"==typeof n?e.fn[t].prototype[n].call(this,a,s,o):e(this).data("tablesawbtnactive")?e(this):(e(this).data("tablesawbtnactive",!0),void e.fn[t].prototype._create.call(this))})},e.extend(e.fn[t].prototype,n)}(),function(){var t={key:"tablesaw-coltoggle"},n=function(n){this.$table=e(n),this.$table.length&&(this.tablesaw=this.$table.data("tablesaw"),this.attributes={btnTarget:"data-tablesaw-columntoggle-btn-target",set:"data-tablesaw-columntoggle-set"},this.classes={columnToggleTable:"tablesaw-columntoggle",columnBtnContain:"tablesaw-columntoggle-btnwrap tablesaw-advance",columnBtn:"tablesaw-columntoggle-btn tablesaw-nav-btn down",popup:"tablesaw-columntoggle-popup",priorityPrefix:"tablesaw-priority-"},this.set=[],this.$headers=this.tablesaw._getPrimaryHeaderCells(),this.$table.data(t.key,this))};n.prototype.initSet=function(){var t=this.$table.attr(this.attributes.set);if(t){var n=this.$table[0];this.set=e("table["+this.attributes.set+"='"+t+"']").filter(function(){return this!==n}).get()}},n.prototype.init=function(){function n(e){var t=e.checked,n=h.getHeaderFromCheckbox(e),a=h.tablesaw._$getCells(n);a[t?"removeClass":"addClass"]("tablesaw-toggle-cellhidden"),a[t?"addClass":"removeClass"]("tablesaw-toggle-cellvisible"),h.updateColspanCells(n,t),h.$table.trigger("tablesawcolumns")}function s(t){t&&e(t.target).closest("."+h.classes.popup).length||(e(document).off("click."+l),r.removeClass("up").addClass("down"),b.removeClass("visible"))}function o(){b.addClass("visible"),r.removeClass("down").addClass("up"),e(document).off("click."+l,s),window.clearTimeout(f),f=window.setTimeout(function(){e(document).on("click."+l,s)},15)}if(this.$table.length){var l,i,r,c,d,b,h=this,p=this.tablesaw.getConfig({getColumnToggleLabelTemplate:function(e){return"<label><input type='checkbox' checked>"+e+"</label>"}});this.$table.addClass(this.classes.columnToggleTable),l=this.$table.attr("id"),i=l+"-popup",b=e("<div class='"+this.classes.columnBtnContain+"'></div>"),r=e("<a href='#"+i+"' class='btn tablesaw-btn btn-micro "+this.classes.columnBtn+"' data-popup-link><span>"+a.i18n.columnToggleButton+"</span></a>"),c=e("<div class='"+this.classes.popup+"' id='"+i+"'></div>"),d=e("<div class='btn-group'></div>"),this.$popup=c;var u=!1;this.$headers.each(function(){var t=e(this),n=t.attr("data-tablesaw-priority"),a=h.tablesaw._$getCells(this);n&&"persist"!==n&&(a.addClass(h.classes.priorityPrefix+n),e(p.getColumnToggleLabelTemplate(t.text())).appendTo(d).find('input[type="checkbox"]').data("tablesaw-header",this),u=!0)}),u||d.append("<label>"+a.i18n.columnToggleError+"</label>"),d.appendTo(c),d.find('input[type="checkbox"]').on("change",function(a){if(n(a.target),h.set.length){var s;e(h.$popup).find("input[type='checkbox']").each(function(e){if(this===a.target)return s=e,!1}),e(h.set).each(function(){var o=e(this).data(t.key).$popup.find("input[type='checkbox']").get(s);o&&(o.checked=a.target.checked,n(o))})}}),r.appendTo(b);var w=e(this.$table.attr(this.attributes.btnTarget));b.appendTo(w.length?w:this.tablesaw.$toolbar);var f;r.on("click.tablesaw",function(e){e.preventDefault(),b.is(".visible")?s():o()}),c.appendTo(b),this.$menu=d;var g=this.$table.closest(".tablesaw-overflow");if(g.css("-webkit-overflow-scrolling")){var m;g.on("scroll",function(){var t=e(this);window.clearTimeout(m),m=window.setTimeout(function(){t.css("-webkit-overflow-scrolling","auto"),window.setTimeout(function(){t.css("-webkit-overflow-scrolling","touch")},0)},100)})}e(window).on(a.events.resize+"."+l,function(){h.refreshToggle()}),this.initSet(),this.refreshToggle()}},n.prototype.getHeaderFromCheckbox=function(t){return e(t).data("tablesaw-header")},n.prototype.refreshToggle=function(){var e=this;this.$menu.find("input").each(function(){var t=e.getHeaderFromCheckbox(this);this.checked="table-cell"===e.tablesaw._$getCells(t).eq(0).css("display")}),this.updateColspanCells()},n.prototype.updateColspanCells=function(e,t){this.tablesaw.updateColspanCells("tablesaw-toggle-cellhidden",e,t)},n.prototype.destroy=function(){this.$table.removeClass(this.classes.columnToggleTable),this.$table.find("th, td").each(function(){e(this).removeClass("tablesaw-toggle-cellhidden").removeClass("tablesaw-toggle-cellvisible"),this.className=this.className.replace(/\bui\-table\-priority\-\d\b/g,"")})},e(document).on(a.events.create,function(e,t){if("columntoggle"===t.mode){new n(t.table).init()}}),e(document).on(a.events.destroy,function(n,a){"columntoggle"===a.mode&&e(a.table).data(t.key).destroy()}),e(document).on(a.events.refresh,function(n,a){"columntoggle"===a.mode&&e(a.table).data(t.key).refreshPriority()}),a.ColumnToggle=n}(),function(){function t(t){var n=[];return e(t.childNodes).each(function(){var t=e(this);t.is("input, select")?n.push(t.val()):t.is(".tablesaw-cell-label")||n.push((t.text()||"").replace(/^\s+|\s+$/g,""))}),n.join("")}var n="tablesaw-sortable",s="table[data-"+n+"]",o="[data-"+n+"-switch]",l={sortCol:"data-tablesaw-sortable-col",defaultCol:"data-tablesaw-sortable-default-col",numericCol:"data-tablesaw-sortable-numeric",subRow:"data-tablesaw-subrow",ignoreRow:"data-tablesaw-ignorerow"},i={head:n+"-head",ascend:n+"-ascending",descend:n+"-descending",switcher:n+"-switch",tableToolbar:"tablesaw-bar-section",sortButton:n+"-btn"},r={_create:function(t){return e(this).each(function(){if(e(this).data(n+"-init"))return!1;e(this).data(n+"-init",!0).trigger("beforecreate."+n)[n]("_init",t).trigger("create."+n)})},_init:function(){function s(t){e.each(t,function(t,n){var a=e(n);a.removeAttr(l.defaultCol),a.removeClass(i.ascend),a.removeClass(i.descend)})}function r(t){if(!e(t.target).is("a[href]")){t.stopPropagation();var a=e(t.target).closest("["+l.sortCol+"]"),o=t.data.col,r=c.index(a[0]);s(a.closest("thead").find("th").filter(function(){return this!==a[0]})),a.is("."+i.descend)||!a.is("."+i.ascend)?(b[n]("sortBy",o,!0),r+="_asc"):(b[n]("sortBy",o),r+="_desc"),d&&d.find("select").val(r).trigger("refresh"),t.preventDefault()}}var c,d,b=e(this),h=b.data("tablesaw");b.addClass(n),c=b.children().filter("thead").find("th["+l.sortCol+"]"),function(t){e.each(t,function(t,n){e(n).addClass(i.head)})}(c),function(t,n){e.each(t,function(t,a){var s=e("<button class='"+i.sortButton+"'/>");s.on("click",{col:a},n),e(a).wrapInner(s).find("button").append("<span class='tablesaw-sortable-arrow'>")})}(c,r),function(t){e.each(t,function(t,n){var a=e(n);a.is("["+l.defaultCol+"]")&&(a.is("."+i.descend)||a.addClass(i.ascend))})}(c),b.is(o)&&function(o){d=e("<div>").addClass(i.switcher).addClass(i.tableToolbar);var r=["<label>"+a.i18n.sort+":"];r.push('<span class="btn tablesaw-btn"><select>'),o.each(function(n){var a=e(this),s=a.is("["+l.defaultCol+"]"),o=a.is("."+i.descend),c=a.is("["+l.numericCol+"]"),d=0;e(this.cells.slice(0,5)).each(function(){isNaN(parseInt(t(this),10))||d++});var b=5===d;c||a.attr(l.numericCol,b?"":"false"),r.push("<option"+(s&&!o?" selected":"")+' value="'+n+'_asc">'+a.text()+" "+(b?"&#x2191;":"(A-Z)")+"</option>"),r.push("<option"+(s&&o?" selected":"")+' value="'+n+'_desc">'+a.text()+" "+(b?"&#x2193;":"(Z-A)")+"</option>")}),r.push("</select></span></label>"),d.html(r.join(""));var c=h.$toolbar.children().eq(0);c.length?d.insertBefore(c):d.appendTo(h.$toolbar),d.find(".tablesaw-btn").tablesawbtn(),d.find("select").on("change",function(){var t=e(this).val().split("_"),a=o.eq(t[0]);s(a.siblings()),b[n]("sortBy",a.get(0),"asc"===t[1])})}(c)},sortRows:function(n,a,s,o,i){var r,c,d=function(n,a){var s=[];return e.each(n,function(n,o){for(var i=o.parentNode,r=e(i),c=[],d=r.next();d.is("["+l.subRow+"]");)c.push(d[0]),d=d.next();var b=i.parentNode;r.is("["+l.subRow+"]")||b===a&&s.push({element:o,cell:t(o),row:i,subrows:c.length?c:null,ignored:r.is("["+l.ignoreRow+"]")})}),s}(o.cells,i),b=e(o).data("tablesaw-sort");return r=!(!b||"function"!=typeof b)&&b(s)||function(e,t){var n=/[^\-\+\d\.]/g;return e?function(e,a){return e.ignored||a.ignored?0:t?parseFloat(e.cell.replace(n,""))-parseFloat(a.cell.replace(n,"")):e.cell.toLowerCase()>a.cell.toLowerCase()?1:-1}:function(e,a){return e.ignored||a.ignored?0:t?parseFloat(a.cell.replace(n,""))-parseFloat(e.cell.replace(n,"")):e.cell.toLowerCase()<a.cell.toLowerCase()?1:-1}}(s,e(o).is("["+l.numericCol+"]")&&!e(o).is("["+l.numericCol+'="false"]')),c=d.sort(r),function(e){var t,n,a=[];for(t=0,n=e.length;t<n;t++)a.push(e[t].row),e[t].subrows&&a.push(e[t].subrows);return a}(c)},makeColDefault:function(t,n){var a=e(t);a.attr(l.defaultCol,"true"),n?(a.removeClass(i.descend),a.addClass(i.ascend)):(a.removeClass(i.ascend),a.addClass(i.descend))},sortBy:function(t,a){var s,o=e(this),l=o.data("tablesaw");l.$tbody.each(function(){var i,r,c,d=this,b=e(this),h=l.getBodyRows(d),p=l.headerMapping[0];for(r=0,c=p.length;r<c;r++)if(p[r]===t){s=r;break}for(i=o[n]("sortRows",h,s,a,t,d),r=0,c=i.length;r<c;r++)b.append(i[r])}),o[n]("makeColDefault",t,a),o.trigger("tablesaw-sorted")}};e.fn[n]=function(t){var a,s=Array.prototype.slice.call(arguments,1);return t&&"string"==typeof t?(a=e.fn[n].prototype[t].apply(this[0],s),void 0!==a?a:e(this)):(e(this).data(n+"-active")||(e(this).data(n+"-active",!0),e.fn[n].prototype._create.call(this,t)),e(this))},e.extend(e.fn[n].prototype,r),e(document).on(a.events.create,function(e,t){t.$table.is(s)&&t.$table[n]()})}(),function(){function n(n,l){function i(){l.css({width:"1px"}),l.find("."+s.hiddenCol).removeClass(s.hiddenCol),M=[],_.each(function(){M.push(this.offsetWidth)}),l.css({width:""})}function r(e){k._$getCells(e).removeClass(s.hiddenCol)}function c(e){k._$getCells(e).addClass(s.hiddenCol)}function d(e){k._$getCells(e).addClass(s.persistCol)}function b(t){return e(t).is('[data-tablesaw-priority="persist"]')}function h(){l.removeClass(s.persistWidths),e("#"+R+"-persist").remove()}function p(){var t,n="#"+R+".tablesaw-swipe ",a=[],o=l.width(),i=[];if(_.each(function(e){var t;b(this)&&(t=this.offsetWidth)<.75*o&&(i.push(e+"-"+t),a.push(n+" ."+s.persistCol+":nth-child("+(e+1)+") { width: "+t+"px; }"))}),t=i.join("_"),a.length){l.addClass(s.persistWidths);var r=e("#"+R+"-persist");r.length&&r.data("tablesaw-hash")===t||(r.remove(),e("<style>"+a.join("\n")+"</style>").attr("id",R+"-persist").data("tablesaw-hash",t).appendTo(B))}}function u(){var t,n=[];return S.each(function(a){var o=e(this),l="none"===o.css("display")||o.is("."+s.hiddenCol);if(l||t){if(l&&t)return n[1]=a,!1}else t=!0,n[0]=a}),n}function w(){var e=u();return[e[1]-1,e[0]-1]}function f(e){return e?u():w()}function g(e){return e[1]>-1&&e[1]<S.length}function m(){var e=l.attr("data-tablesaw-swipe-media");return!e||"matchMedia"in t&&t.matchMedia(e).matches}function v(){if(m()){var t=l.parent().width(),n=[],a=0,o=[],i=_.length;_.each(function(s){var l=e(this),r=l.is('[data-tablesaw-priority="persist"]');n.push(r),a+=M[s],o.push(a),(r||a>t)&&i--});var b=0===i;_.each(function(e){o[e]>t&&c(this)}),_.each(function(e){if(n[e])return void d(this);(o[e]<=t||b)&&(b=!1,r(this),k.updateColspanCells(s.hiddenCol,this,!0))}),h(),l.trigger("tablesawcolumns")}}function y(e){var t=f(e);g(t)&&(isNaN(t[0])&&(t[0]=e?0:S.length-1),p(),c(S.get(t[0])),k.updateColspanCells(s.hiddenCol,S.get(t[0]),!1),r(S.get(t[1])),k.updateColspanCells(s.hiddenCol,S.get(t[1]),!0),l.trigger("tablesawcolumns"))}function C(e,t){return(e.touches||e.originalEvent.touches)[0][t]}var k=l.data("tablesaw"),x=e("<div class='tablesaw-advance'></div>"),T=e("<a href='#' class='btn tablesaw-nav-btn tablesaw-btn btn-micro left'>"+a.i18n.swipePreviousColumn+"</a>").appendTo(x),$=e("<a href='#' class='btn tablesaw-nav-btn tablesaw-btn btn-micro right'>"+a.i18n.swipeNextColumn+"</a>").appendTo(x),_=n._getPrimaryHeaderCells(),S=_.not('[data-tablesaw-priority="persist"]'),M=[],B=e(document.head||"head"),R=l.attr("id");if(!_.length)throw new Error("tablesaw swipe: no header cells found.");l.addClass("tablesaw-swipe"),i(),x.appendTo(k.$toolbar),R||(R="tableswipe-"+Math.round(1e4*Math.random()),l.attr("id",R)),T.add($).on("click",function(t){y(!!e(t.target).closest($).length),t.preventDefault()}),l.is("["+o.disableTouchEvents+"]")||l.on("touchstart.swipetoggle",function(s){var o,l,i=C(s,"pageX"),r=C(s,"pageY"),c=window.pageYOffset;e(t).off(a.events.resize,v),e(this).on("touchmove.swipetoggle",function(e){o=C(e,"pageX"),l=C(e,"pageY")}).on("touchend.swipetoggle",function(){var s=n.getConfig({swipeHorizontalThreshold:30,swipeVerticalThreshold:30}),d=s.swipe?s.swipe.verticalThreshold:s.swipeVerticalThreshold,b=s.swipe?s.swipe.horizontalThreshold:s.swipeHorizontalThreshold,h=Math.abs(window.pageYOffset-c)>=d;Math.abs(l-r)>=d||h||(o-i<-1*b&&y(!0),o-i>b&&y(!1)),window.setTimeout(function(){e(t).on(a.events.resize,v)},300),e(this).off("touchmove.swipetoggle touchend.swipetoggle")})}),l.on("tablesawcolumns.swipetoggle",function(){var e=g(w()),t=g(u());T[e?"removeClass":"addClass"](s.hideBtn),$[t?"removeClass":"addClass"](s.hideBtn),k.$toolbar[e||t?"removeClass":"addClass"](s.allColumnsVisible)}).on("tablesawnext.swipetoggle",function(){y(!0)}).on("tablesawprev.swipetoggle",function(){y(!1)}).on(a.events.destroy+".swipetoggle",function(){var n=e(this);n.removeClass("tablesaw-swipe"),k.$toolbar.find(".tablesaw-advance").remove(),e(t).off(a.events.resize,v),n.off(".swipetoggle")}).on(a.events.refresh,function(){h(),i(),v()}),v(),e(t).on(a.events.resize,v)}var s={hideBtn:"disabled",persistWidths:"tablesaw-fix-persist",hiddenCol:"tablesaw-swipe-cellhidden",persistCol:"tablesaw-swipe-cellpersist",allColumnsVisible:"tablesaw-all-cols-visible"},o={disableTouchEvents:"data-tablesaw-no-touch",ignorerow:"data-tablesaw-ignorerow",subrow:"data-tablesaw-subrow"};e(document).on(a.events.create,function(e,t){"swipe"===t.mode&&n(t,t.$table)})}(),function(){function n(n){function o(){if(!s.show(n[0]))return void i.css("display","none");i.css("display","block");var t=r.find("li").removeClass(c);n.find("thead th").each(function(n){"none"===e(this).css("display")&&t.eq(n).addClass(c)})}var l=n.data("tablesaw"),i=e('<div class="tablesaw-advance minimap">'),r=e('<ul class="tablesaw-advance-dots">').appendTo(i),c="tablesaw-advance-dots-hide";n.data("tablesaw")._getPrimaryHeaderCells().each(function(){r.append("<li><i></i></li>")}),i.appendTo(l.$toolbar),o(),e(t).on(a.events.resize,o),n.on("tablesawcolumns.minimap",function(){o()}).on(a.events.destroy+".minimap",function(){var n=e(this);l.$toolbar.find(".tablesaw-advance").remove(),e(t).off(a.events.resize,o),n.off(".minimap")})}var s={attr:{init:"data-tablesaw-minimap"},show:function(e){var n=e.getAttribute(s.attr.init);return""===n||!!(n&&"matchMedia"in t)&&t.matchMedia(n).matches}};e(document).on(a.events.create,function(e,t){"swipe"!==t.mode&&"columntoggle"!==t.mode||!t.$table.is("[ "+s.attr.init+"]")||n(t.$table)}),a.MiniMap=s}(),function(){var n={selectors:{init:"table[data-tablesaw-mode-switch]"},attributes:{excludeMode:"data-tablesaw-mode-exclude"},classes:{main:"tablesaw-modeswitch",toolbar:"tablesaw-bar-section"},modes:["stack","swipe","columntoggle"],init:function(t){var s,o=e(t),l=o.data("tablesaw"),i=o.attr(n.attributes.excludeMode),r=l.$toolbar,c=e("<div>").addClass(n.classes.main+" "+n.classes.toolbar),d=['<label><span class="abbreviated">'+a.i18n.modeSwitchColumnsAbbreviated+'</span><span class="longform">'+a.i18n.modeSwitchColumns+"</span>:"],b=o.attr("data-tablesaw-mode");d.push('<span class="btn tablesaw-btn"><select>');for(var h=0,p=n.modes.length;h<p;h++)i&&i.toLowerCase()===n.modes[h]||(s=b===n.modes[h],d.push("<option"+(s?" selected":"")+' value="'+n.modes[h]+'">'+a.i18n.modes[h]+"</option>"));d.push("</select></span></label>"),c.html(d.join(""));var u=r.find(".tablesaw-advance").eq(0);u.length?c.insertBefore(u):c.appendTo(r),c.find(".tablesaw-btn").tablesawbtn(),c.find("select").on("change",function(a){return n.onModeChange.call(t,a,e(this).val())})},onModeChange:function(t,a){var s=e(this),o=s.data("tablesaw");o.$toolbar.find("."+n.classes.main).remove(),o.destroy(),s.attr("data-tablesaw-mode",a),s.tablesaw()}};e(t.document).on(a.events.create,function(e,t){t.$table.is(n.selectors.init)&&n.init(t.table)})}(),function(){function t(e){this.tablesaw=e,this.$table=e.$table,this.attr="data-tablesaw-checkall",this.checkAllSelector="["+this.attr+"]",this.forceCheckedSelector="["+this.attr+"-checked]",this.forceUncheckedSelector="["+this.attr+"-unchecked]",this.checkboxSelector='input[type="checkbox"]',this.$triggers=null,this.$checkboxes=null,this.$table.data(n)||(this.$table.data(n,this),this.init())}var n="tablesawCheckAll";t.prototype._filterCells=function(t){return t.filter(function(){return!e(this).closest("tr").is("[data-tablesaw-subrow],[data-tablesaw-ignorerow]")}).find(this.checkboxSelector).not(this.checkAllSelector)},t.prototype.getCheckboxesForButton=function(t){return this._filterCells(e(e(t).attr(this.attr)))},t.prototype.getCheckboxesForCheckbox=function(t){return this._filterCells(e(e(t).closest("th")[0].cells))},t.prototype.init=function(){var t=this;this.$table.find(this.checkAllSelector).each(function(){e(this).is(t.checkboxSelector)?t.addCheckboxEvents(this):t.addButtonEvents(this)})},t.prototype.addButtonEvents=function(t){var a=this;e(t).on("click",function(t){t.preventDefault();var s=a.getCheckboxesForButton(this),o=!0;s.each(function(){this.checked||(o=!1)});var l;l=!!e(this).is(a.forceCheckedSelector)||!e(this).is(a.forceUncheckedSelector)&&!o,s.each(function(){this.checked=l,e(this).trigger("change."+n)})})},t.prototype.addCheckboxEvents=function(t){var a=this;e(t).on("change",function(){var e=this.checked;a.getCheckboxesForCheckbox(this).each(function(){this.checked=e})});var s=a.getCheckboxesForCheckbox(t);s.on("change."+n,function(){var e=0;s.each(function(){this.checked&&e++});var n=e===s.length;t.checked=n,t.indeterminate=0!==e&&!n})},e(document).on(a.events.create,function(e,n){new t(n)}),a.CheckAll=t}(),a})},46:function(e,t,n){var a=n(58);"string"==typeof a&&(a=[[e.i,a,""]]);n(52)(a,{});a.locals&&(e.exports=a.locals)},51:function(e,t,n){"use strict";e.exports=function(){var e=[];return e.toString=function(){for(var e=[],t=0;t<this.length;t++){var n=this[t];n[2]?e.push("@media "+n[2]+"{"+n[1]+"}"):e.push(n[1])}return e.join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var a={},s=0;s<this.length;s++){var o=this[s][0];"number"==typeof o&&(a[o]=!0)}for(s=0;s<t.length;s++){var l=t[s];"number"==typeof l[0]&&a[l[0]]||(n&&!l[2]?l[2]=n:n&&(l[2]="("+l[2]+") and ("+n+")"),e.push(l))}},e}},52:function(e,t){function n(e,t){for(var n=0;n<e.length;n++){var a=e[n],s=h[a.id];if(s){s.refs++;for(var o=0;o<s.parts.length;o++)s.parts[o](a.parts[o]);for(;o<a.parts.length;o++)s.parts.push(r(a.parts[o],t))}else{for(var l=[],o=0;o<a.parts.length;o++)l.push(r(a.parts[o],t));h[a.id]={id:a.id,refs:1,parts:l}}}}function a(e){for(var t=[],n={},a=0;a<e.length;a++){var s=e[a],o=s[0],l=s[1],i=s[2],r=s[3],c={css:l,media:i,sourceMap:r};n[o]?n[o].parts.push(c):t.push(n[o]={id:o,parts:[c]})}return t}function s(e,t){var n=w(),a=m[m.length-1];if("top"===e.insertAt)a?a.nextSibling?n.insertBefore(t,a.nextSibling):n.appendChild(t):n.insertBefore(t,n.firstChild),m.push(t);else{if("bottom"!==e.insertAt)throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");n.appendChild(t)}}function o(e){e.parentNode.removeChild(e);var t=m.indexOf(e);t>=0&&m.splice(t,1)}function l(e){var t=document.createElement("style");return t.type="text/css",s(e,t),t}function i(e){var t=document.createElement("link");return t.rel="stylesheet",s(e,t),t}function r(e,t){var n,a,s;if(t.singleton){var r=g++;n=f||(f=l(t)),a=c.bind(null,n,r,!1),s=c.bind(null,n,r,!0)}else e.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(n=i(t),a=b.bind(null,n),s=function(){o(n),n.href&&URL.revokeObjectURL(n.href)}):(n=l(t),a=d.bind(null,n),s=function(){o(n)});return a(e),function(t){if(t){if(t.css===e.css&&t.media===e.media&&t.sourceMap===e.sourceMap)return;a(e=t)}else s()}}function c(e,t,n,a){var s=n?"":a.css;if(e.styleSheet)e.styleSheet.cssText=v(t,s);else{var o=document.createTextNode(s),l=e.childNodes;l[t]&&e.removeChild(l[t]),l.length?e.insertBefore(o,l[t]):e.appendChild(o)}}function d(e,t){var n=t.css,a=t.media;if(a&&e.setAttribute("media",a),e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}function b(e,t){var n=t.css,a=t.sourceMap;a&&(n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(a))))+" */");var s=new Blob([n],{type:"text/css"}),o=e.href;e.href=URL.createObjectURL(s),o&&URL.revokeObjectURL(o)}var h={},p=function(e){var t;return function(){return void 0===t&&(t=e.apply(this,arguments)),t}},u=p(function(){return/msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase())}),w=p(function(){return document.head||document.getElementsByTagName("head")[0]}),f=null,g=0,m=[];e.exports=function(e,t){if("undefined"!=typeof DEBUG&&DEBUG&&"object"!=typeof document)throw new Error("The style-loader cannot be used in a non-browser environment");t=t||{},void 0===t.singleton&&(t.singleton=u()),void 0===t.insertAt&&(t.insertAt="bottom");var s=a(e);return n(s,t),function(e){for(var o=[],l=0;l<s.length;l++){var i=s[l],r=h[i.id];r.refs--,o.push(r)}if(e){n(a(e),t)}for(var l=0;l<o.length;l++){var r=o[l];if(0===r.refs){for(var c=0;c<r.parts.length;c++)r.parts[c]();delete h[r.id]}}}};var v=function(){var e=[];return function(t,n){return e[t]=n,e.filter(Boolean).join("\n")}}()},58:function(e,t,n){t=e.exports=n(51)(),t.push([e.i,'/*! Tablesaw - v3.0.6 - 2017-11-20\n* https://github.com/filamentgroup/tablesaw\n* Copyright (c) 2017 Filament Group; Licensed MIT */\n\n.tablesaw {\n  width: 100%;\n  max-width: 100%;\n  empty-cells: show;\n  border-collapse: collapse;\n  border: 0;\n  padding: 0;\n}\n\n.tablesaw * {\n  box-sizing: border-box;\n}\n\n.tablesaw-btn {\n  border: 1px solid #ccc;\n  border-radius: .25em;\n  background: none;\n  box-shadow: 0 1px 0 rgba(255,255,255,1);\n  color: #4a4a4a;\n  cursor: pointer;\n  display: inline-block;\n  margin: 0;\n  padding: .5em .85em .4em .85em;\n  position: relative;\n  text-align: center;\n  text-decoration: none;\n  text-transform: capitalize;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n}\n\na.tablesaw-btn {\n  color: #1c95d4;\n}\n\n.tablesaw-btn:hover {\n  text-decoration: none;\n}\n\n/* Default radio/checkbox styling horizonal controlgroups. */\n\n.tablesaw-btn:active {\n  background-color: #ddd;\n}\n\n@supports (box-shadow: none ) {\n  .tablesaw-btn:focus {\n    background-color: #fff;\n    outline: none;\n  }\n\n  .tablesaw-btn:focus {\n    box-shadow: 0 0 .35em #4faeef !important;\n  }\n}\n\n.tablesaw-btn-select select {\n  background: none;\n  border: none;\n  display: inline-block;\n  position: absolute;\n  left: 0;\n  top: 0;\n  margin: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 2;\n  min-height: 1em;\n  opacity: 0;\n  color: transparent;\n}\n\n.tablesaw-btn select option {\n  background: #fff;\n  color: #000;\n}\n\n.tablesaw-btn {\n  display: inline-block;\n  width: auto;\n  height: auto;\n  position: relative;\n  top: 0;\n}\n\n.tablesaw-btn.btn-small {\n  font-size: 1.0625em;\n  line-height: 19px;\n  padding: .3em 1em .3em 1em;\n}\n\n.tablesaw-btn.btn-micro {\n  font-size: .8125em;\n  padding: .4em .7em .25em .7em;\n}\n\n.tablesaw-btn-select {\n  padding-right: 1.5em;\n  text-align: left;\n  display: inline-block;\n  color: #4d4d4d;\n  padding-right: 2.5em;\n  min-width: 7.25em;\n  text-align: left;\n}\n\n.tablesaw-btn-select:after {\n  content: " ";\n  position: absolute;\n  background: none;\n  background-repeat: no-repeat;\n  background-position: .25em .45em;\n  content: "\\25BC";\n  font-size: .55em;\n  padding-top: 1.2em;\n  padding-left: 1em;\n  left: auto;\n  right: 0;\n  margin: 0;\n  top: 0;\n  bottom: 0;\n  width: 1.8em;\n}\n\n.tablesaw-btn-select.btn-small:after,\n.tablesaw-btn-select.btn-micro:after {\n  width: 1.2em;\n  font-size: .5em;\n  padding-top: 1em;\n  padding-right: .5em;\n  line-height: 1.65;\n  background: none;\n  box-shadow: none;\n  border-left-width: 0;\n}\n\n/* Column navigation buttons for swipe and columntoggle tables */\n\n.tablesaw-advance .tablesaw-btn {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  box-sizing: border-box;\n  text-shadow: 0 1px 0 #fff;\n  border-radius: .25em;\n}\n\n.tablesaw-advance .tablesaw-btn.btn-micro {\n  font-size: .8125em;\n  padding: .3em .7em .25em .7em;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn:first-child {\n  margin-left: 0;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn:last-child {\n  margin-right: 0;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn {\n  display: inline-block;\n  overflow: hidden;\n  width: 1.8em;\n  height: 1.8em;\n  background-position: 50% 50%;\n  margin-left: .25em;\n  margin-right: .25em;\n  position: relative;\n  text-indent: -9999px;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.left:before,\n.tablesaw-advance a.tablesaw-nav-btn.right:before,\n.tablesaw-advance a.tablesaw-nav-btn.down:before,\n.tablesaw-advance a.tablesaw-nav-btn.up:before {\n  content: " ";\n  overflow: hidden;\n  width: 0;\n  height: 0;\n  position: absolute;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.down:before {\n  left: .5em;\n  top: .65em;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n  border-top: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.up:before {\n  left: .5em;\n  top: .65em;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n  border-bottom: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.left:before,\n.tablesaw-advance a.tablesaw-nav-btn.right:before {\n  top: .45em;\n  border-top: 5px solid transparent;\n  border-bottom: 5px solid transparent;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.left:before {\n  left: .6em;\n  border-right: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.right:before {\n  left: .7em;\n  border-left: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.disabled {\n  opacity: .25;\n  cursor: default;\n  pointer-events: none;\n}\n\n/* Table Toolbar */\n\n.tablesaw-bar {\n  clear: both;\n}\n\n.tablesaw-bar * {\n  box-sizing: border-box;\n}\n\n.tablesaw-bar-section {\n  float: left;\n}\n\n.tablesaw-bar-section label {\n  font-size: .875em;\n  padding: .5em 0;\n  clear: both;\n  display: block;\n  color: #888;\n  margin-right: .5em;\n  text-transform: uppercase;\n}\n\n.tablesaw-btn,\n.tablesaw-enhanced .tablesaw-btn {\n  margin-top: .5em;\n  margin-bottom: .5em;\n}\n\n.tablesaw-btn-select,\n.tablesaw-enhanced .tablesaw-btn-select {\n  margin-bottom: 0;\n}\n\n/* TODO */\n\n.tablesaw-bar .tablesaw-bar-section .tablesaw-btn {\n  margin-left: .4em;\n  margin-top: 0;\n  text-transform: uppercase;\n  border: none;\n  box-shadow: none;\n  background: transparent;\n  font-size: 1em;\n  padding-left: .3em;\n}\n\n.tablesaw-bar .tablesaw-bar-section .btn-select {\n  min-width: 0;\n}\n\n.tablesaw-bar .tablesaw-bar-section .btn-select:after {\n  padding-top: .9em;\n}\n\n.tablesaw-bar .tablesaw-bar-section select {\n  color: #888;\n  text-transform: none;\n  background: transparent;\n}\n\n.tablesaw-bar-section ~ table {\n  clear: both;\n}\n\n.tablesaw-bar-section .abbreviated {\n  display: inline;\n}\n\n.tablesaw-bar-section .longform {\n  display: none;\n}\n\n@media (min-width: 24em) {\n  .tablesaw-bar-section .abbreviated {\n    display: none;\n  }\n\n  .tablesaw-bar-section .longform {\n    display: inline;\n  }\n}\n\n.tablesaw th,\n.tablesaw td {\n  padding: .5em .7em;\n  text-align: left;\n  vertical-align: middle;\n}\n\n.tablesaw-sortable-btn {\n  /* same as cell padding above */\n  padding: .5em .7em;\n}\n\n.tablesaw thead th {\n  text-align: left;\n}\n\n/* Table rows have a gray bottom stroke by default */\n\n.tablesaw-row-border tr {\n  border-bottom: 1px solid #dfdfdf;\n}\n\n/* Zebra striping */\n\n.tablesaw-row-zebra tr:nth-child(2n) {\n  background-color: #f8f8f8;\n}\n\n.tablesaw caption {\n  text-align: left;\n  margin: .59375em 0;\n}\n\n.tablesaw-swipe .tablesaw-swipe-cellpersist {\n  border-right: 2px solid #e4e1de;\n}\n\n.tablesaw-swipe-shadow .tablesaw-swipe-cellpersist {\n  border-right-width: 1px;\n}\n\n.tablesaw-swipe-shadow .tablesaw-swipe-cellpersist {\n  box-shadow: 3px 0 4px -1px #e4e1de;\n}\n\n.tablesaw-stack td .tablesaw-cell-label,\n.tablesaw-stack th .tablesaw-cell-label {\n  display: none;\n}\n\n/* Mobile first styles: Begin with the stacked presentation at narrow widths */\n\n/* Support note IE9+: @media only all */\n\n@media only all {\n  /* Show the table cells as a block level element */\n\n  .tablesaw-stack {\n    clear: both;\n  }\n\n  .tablesaw-stack td,\n  .tablesaw-stack th {\n    text-align: left;\n    display: block;\n  }\n\n  .tablesaw-stack tr {\n    clear: both;\n    display: table-row;\n  }\n\n  /* Make the label elements a percentage width */\n\n  .tablesaw-stack td .tablesaw-cell-label,\n  .tablesaw-stack th .tablesaw-cell-label {\n    display: inline-block;\n    padding: 0 .6em 0 0;\n    width: 30%;\n  }\n\n  /* For grouped headers, have a different style to visually separate the levels by classing the first label in each col group */\n\n  .tablesaw-stack th .tablesaw-cell-label-top,\n  .tablesaw-stack td .tablesaw-cell-label-top {\n    display: block;\n    padding: .4em 0;\n    margin: .4em 0;\n  }\n\n  .tablesaw-cell-label {\n    display: block;\n  }\n\n  /* Avoid double strokes when stacked */\n\n  .tablesaw-stack tbody th.group {\n    margin-top: -1px;\n  }\n\n  /* Avoid double strokes when stacked */\n\n  .tablesaw-stack th.group b.tablesaw-cell-label {\n    display: none !important;\n  }\n}\n\n@media (max-width: 39.9375em) {\n  /* Table rows have a gray bottom stroke by default */\n\n  .tablesaw-stack tbody tr {\n    display: block;\n    width: 100%;\n    border-bottom: 1px solid #dfdfdf;\n  }\n\n  .tablesaw-stack thead td,\n  .tablesaw-stack thead th {\n    display: none;\n  }\n\n  .tablesaw-stack tbody td,\n  .tablesaw-stack tbody th {\n    display: block;\n    float: left;\n    clear: left;\n    width: 100%;\n  }\n\n  .tablesaw-cell-label {\n    vertical-align: top;\n  }\n\n  .tablesaw-cell-content {\n    display: inline-block;\n    max-width: 67%;\n  }\n\n  .tablesaw-stack .tablesaw-stack-block .tablesaw-cell-label,\n  .tablesaw-stack .tablesaw-stack-block .tablesaw-cell-content {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n    padding: 0;\n  }\n\n  .tablesaw-stack td:empty,\n  .tablesaw-stack th:empty {\n    display: none;\n  }\n}\n\n/* Media query to show as a standard table at 560px (35em x 16px) or wider */\n\n@media (min-width: 40em) {\n  .tablesaw-stack tr {\n    display: table-row;\n  }\n\n  /* Show the table header rows */\n\n  .tablesaw-stack td,\n  .tablesaw-stack th,\n  .tablesaw-stack thead td,\n  .tablesaw-stack thead th {\n    display: table-cell;\n    margin: 0;\n  }\n\n  /* Hide the labels in each cell */\n\n  .tablesaw-stack td .tablesaw-cell-label,\n  .tablesaw-stack th .tablesaw-cell-label {\n    display: none !important;\n  }\n}\n\n.tablesaw-fix-persist {\n  table-layout: fixed;\n}\n\n@media only all {\n  /* Unchecked manually: Always hide */\n\n  .tablesaw-swipe th.tablesaw-swipe-cellhidden,\n  .tablesaw-swipe td.tablesaw-swipe-cellhidden {\n    display: none;\n  }\n}\n\n.tablesaw-overflow {\n  position: relative;\n  width: 100%;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n  /* More in skin.css */\n}\n\n.tablesaw-overflow > .tablesaw {\n  margin-top: 2px;\n  /* sortable focus rings are clipped */\n}\n\n/* Used for a11y text on button: "Columns" */\n\n.tablesaw-columntoggle-btn span {\n  text-indent: -9999px;\n  display: inline-block;\n}\n\n.tablesaw-columntoggle-btnwrap {\n  position: relative;\n  /* for dialog positioning */\n}\n\n.tablesaw-columntoggle-btnwrap .dialog-content {\n  padding: .5em;\n}\n\n.tablesaw-columntoggle tbody td {\n  line-height: 1.5;\n}\n\n/* Remove top/bottom margins around the fieldcontain on check list */\n\n.tablesaw-columntoggle-popup {\n  display: none;\n}\n\n.tablesaw-columntoggle-btnwrap.visible .tablesaw-columntoggle-popup {\n  display: block;\n  position: absolute;\n  top: 2em;\n  right: 0;\n  background-color: #fff;\n  padding: .5em .8em;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 2px #ccc;\n  border-radius: .2em;\n  z-index: 1;\n}\n\n.tablesaw-columntoggle-popup fieldset {\n  margin: 0;\n}\n\n/* Hide all prioritized columns by default */\n\n@media only all {\n  .tablesaw-columntoggle th.tablesaw-priority-6,\n  .tablesaw-columntoggle td.tablesaw-priority-6,\n  .tablesaw-columntoggle th.tablesaw-priority-5,\n  .tablesaw-columntoggle td.tablesaw-priority-5,\n  .tablesaw-columntoggle th.tablesaw-priority-4,\n  .tablesaw-columntoggle td.tablesaw-priority-4,\n  .tablesaw-columntoggle th.tablesaw-priority-3,\n  .tablesaw-columntoggle td.tablesaw-priority-3,\n  .tablesaw-columntoggle th.tablesaw-priority-2,\n  .tablesaw-columntoggle td.tablesaw-priority-2,\n  .tablesaw-columntoggle th.tablesaw-priority-1,\n  .tablesaw-columntoggle td.tablesaw-priority-1,\n  .tablesaw-columntoggle th.tablesaw-priority-0,\n  .tablesaw-columntoggle td.tablesaw-priority-0 {\n    display: none;\n  }\n}\n\n.tablesaw-columntoggle-btnwrap .dialog-content {\n  top: 0 !important;\n  right: 1em;\n  left: auto !important;\n  width: 12em;\n  max-width: 18em;\n  margin: -.5em auto 0;\n}\n\n.tablesaw-columntoggle-btnwrap .dialog-content:focus {\n  outline-style: none;\n}\n\n/* Preset breakpoints if "" class added to table */\n\n/* Show priority 1 at 320px (20em x 16px) */\n\n@media (min-width: 20em) {\n  .tablesaw-columntoggle th.tablesaw-priority-1,\n  .tablesaw-columntoggle td.tablesaw-priority-1 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 2 at 480px (30em x 16px) */\n\n@media (min-width: 30em) {\n  .tablesaw-columntoggle th.tablesaw-priority-2,\n  .tablesaw-columntoggle td.tablesaw-priority-2 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 3 at 640px (40em x 16px) */\n\n@media (min-width: 40em) {\n  .tablesaw-columntoggle th.tablesaw-priority-3,\n  .tablesaw-columntoggle td.tablesaw-priority-3 {\n    display: table-cell;\n  }\n\n  .tablesaw-columntoggle tbody td {\n    line-height: 2;\n  }\n}\n\n/* Show priority 4 at 800px (50em x 16px) */\n\n@media (min-width: 50em) {\n  .tablesaw-columntoggle th.tablesaw-priority-4,\n  .tablesaw-columntoggle td.tablesaw-priority-4 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 5 at 960px (60em x 16px) */\n\n@media (min-width: 60em) {\n  .tablesaw-columntoggle th.tablesaw-priority-5,\n  .tablesaw-columntoggle td.tablesaw-priority-5 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 6 at 1,120px (70em x 16px) */\n\n@media (min-width: 70em) {\n  .tablesaw-columntoggle th.tablesaw-priority-6,\n  .tablesaw-columntoggle td.tablesaw-priority-6 {\n    display: table-cell;\n  }\n}\n\n@media only all {\n  /* Unchecked manually: Always hide */\n\n  .tablesaw-columntoggle th.tablesaw-toggle-cellhidden,\n  .tablesaw-columntoggle td.tablesaw-toggle-cellhidden {\n    display: none;\n  }\n\n  /* Checked manually: Always show */\n\n  .tablesaw-columntoggle th.tablesaw-toggle-cellvisible,\n  .tablesaw-columntoggle td.tablesaw-toggle-cellvisible {\n    display: table-cell;\n  }\n}\n\n.tablesaw-columntoggle-popup .btn-group > label {\n  display: block;\n  padding: .2em 0;\n  white-space: nowrap;\n  cursor: default;\n}\n\n.tablesaw-columntoggle-popup .btn-group > label input {\n  margin-right: .8em;\n}\n\n.tablesaw-sortable-head {\n  position: relative;\n  vertical-align: top;\n}\n\n/* Override */\n\n.tablesaw .tablesaw-sortable-head {\n  padding: 0;\n}\n\n.tablesaw-sortable-btn {\n  min-width: 100%;\n  color: inherit;\n  background: transparent;\n  border: 0;\n  text-align: inherit;\n  font: inherit;\n  text-transform: inherit;\n}\n\n.tablesaw-sortable-arrow:after {\n  display: inline-block;\n  width: 10px;\n  height: 14px;\n  content: " ";\n  margin-left: .3125em;\n}\n\n.tablesaw-sortable-ascending .tablesaw-sortable-arrow:after,\n.tablesaw-sortable-descending .tablesaw-sortable-arrow:after {\n  content: " ";\n}\n\n.tablesaw-sortable-ascending .tablesaw-sortable-arrow:after {\n  content: "\\2191";\n}\n\n.tablesaw-sortable-descending .tablesaw-sortable-arrow:after {\n  content: "\\2193";\n}\n\n.tablesaw-advance {\n  float: right;\n}\n\n.tablesaw-advance.minimap {\n  margin-right: .4em;\n}\n\n.tablesaw-advance-dots {\n  float: left;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.tablesaw-advance-dots li {\n  display: table-cell;\n  margin: 0;\n  padding: .4em .2em;\n}\n\n.tablesaw-advance-dots li i {\n  width: .25em;\n  height: .25em;\n  background: #555;\n  border-radius: 100%;\n  display: inline-block;\n}\n\n.tablesaw-advance-dots-hide {\n  opacity: .25;\n  cursor: default;\n  pointer-events: none;\n}',""])}});
+(function (root, factory) {
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (jQuery) {
+			return root.Tablesaw = factory(jQuery, root);
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if (typeof exports === 'object') {
+		module.exports = factory(require('jquery')(root), root);
+	} else {
+		root.Tablesaw = factory(jQuery, root);
+	}
+})(typeof window !== "undefined" ? window : undefined, function ($, win) {
+	"use strict";
+
+	var domContentLoadedTriggered = false;
+	document.addEventListener("DOMContentLoaded", function () {
+		domContentLoadedTriggered = true;
+	});
+
+	var Tablesaw = {
+		i18n: {
+			modeStack: "Stack",
+			modeSwipe: "Swipe",
+			modeToggle: "Toggle",
+			modeSwitchColumnsAbbreviated: "Cols",
+			modeSwitchColumns: "Columns",
+			columnToggleButton: "Columns",
+			columnToggleError: "No eligible columns.",
+			sort: "Sort",
+			swipePreviousColumn: "Previous column",
+			swipeNextColumn: "Next column"
+		},
+		// cut the mustard
+		mustard: "head" in document && ( // IE9+, Firefox 4+, Safari 5.1+, Mobile Safari 4.1+, Opera 11.5+, Android 2.3+
+		!window.blackberry || window.WebKitPoint) && // only WebKit Blackberry (OS 6+)
+		!window.operamini,
+		$: $,
+		_init: function (element) {
+			Tablesaw.$(element || document).trigger("enhance.tablesaw");
+		},
+		init: function (element) {
+			if (!domContentLoadedTriggered) {
+				if ("addEventListener" in document) {
+					// Use raw DOMContentLoaded instead of shoestring (may have issues in Android 2.3, exhibited by stack table)
+					document.addEventListener("DOMContentLoaded", function () {
+						Tablesaw._init(element);
+					});
+				}
+			} else {
+				Tablesaw._init(element);
+			}
+		}
+	};
+
+	$(win.document).on("enhance.tablesaw", function () {
+		// Extend i18n config, if one exists.
+		if (typeof TablesawConfig !== "undefined" && TablesawConfig.i18n) {
+			Tablesaw.i18n = $.extend(Tablesaw.i18n, TablesawConfig.i18n || {});
+		}
+
+		Tablesaw.i18n.modes = [Tablesaw.i18n.modeStack, Tablesaw.i18n.modeSwipe, Tablesaw.i18n.modeToggle];
+	});
+
+	if (Tablesaw.mustard) {
+		$(document.documentElement).addClass("tablesaw-enhanced");
+	}
+
+	(function () {
+		var pluginName = "tablesaw";
+		var classes = {
+			toolbar: "tablesaw-bar"
+		};
+		var events = {
+			create: "tablesawcreate",
+			destroy: "tablesawdestroy",
+			refresh: "tablesawrefresh",
+			resize: "tablesawresize"
+		};
+		var defaultMode = "stack";
+		var initSelector = "table";
+		var initFilterSelector = "[data-tablesaw],[data-tablesaw-mode],[data-tablesaw-sortable]";
+		var defaultConfig = {};
+
+		Tablesaw.events = events;
+
+		var Table = function (element) {
+			if (!element) {
+				throw new Error("Tablesaw requires an element.");
+			}
+
+			this.table = element;
+			this.$table = $(element);
+
+			// only one <thead> and <tfoot> are allowed, per the specification
+			this.$thead = this.$table.children().filter("thead").eq(0);
+
+			// multiple <tbody> are allowed, per the specification
+			this.$tbody = this.$table.children().filter("tbody");
+
+			this.mode = this.$table.attr("data-tablesaw-mode") || defaultMode;
+
+			this.$toolbar = null;
+
+			this.attributes = {
+				subrow: "data-tablesaw-subrow",
+				ignorerow: "data-tablesaw-ignorerow"
+			};
+
+			this.init();
+		};
+
+		Table.prototype.init = function () {
+			if (!this.$thead.length) {
+				throw new Error("tablesaw: a <thead> is required, but none was found.");
+			}
+
+			if (!this.$thead.find("th").length) {
+				throw new Error("tablesaw: no header cells found. Are you using <th> inside of <thead>?");
+			}
+
+			// assign an id if there is none
+			if (!this.$table.attr("id")) {
+				this.$table.attr("id", pluginName + "-" + Math.round(Math.random() * 10000));
+			}
+
+			this.createToolbar();
+
+			this._initCells();
+
+			this.$table.data(pluginName, this);
+
+			this.$table.trigger(events.create, [this]);
+		};
+
+		Table.prototype.getConfig = function (pluginSpecificConfig) {
+			// shoestring extend doesn’t support arbitrary args
+			var configs = $.extend(defaultConfig, pluginSpecificConfig || {});
+			return $.extend(configs, typeof TablesawConfig !== "undefined" ? TablesawConfig : {});
+		};
+
+		Table.prototype._getPrimaryHeaderRow = function () {
+			return this._getHeaderRows().eq(0);
+		};
+
+		Table.prototype._getHeaderRows = function () {
+			return this.$thead.children().filter("tr").filter(function () {
+				return !$(this).is("[data-tablesaw-ignorerow]");
+			});
+		};
+
+		Table.prototype._getRowIndex = function ($row) {
+			return $row.prevAll().length;
+		};
+
+		Table.prototype._getHeaderRowIndeces = function () {
+			var self = this;
+			var indeces = [];
+			this._getHeaderRows().each(function () {
+				indeces.push(self._getRowIndex($(this)));
+			});
+			return indeces;
+		};
+
+		Table.prototype._getPrimaryHeaderCells = function ($row) {
+			return ($row || this._getPrimaryHeaderRow()).find("th");
+		};
+
+		Table.prototype._$getCells = function (th) {
+			var self = this;
+			return $(th).add(th.cells).filter(function () {
+				var $t = $(this);
+				var $row = $t.parent();
+				var hasColspan = $t.is("[colspan]");
+				// no subrows or ignored rows (keep cells in ignored rows that do not have a colspan)
+				return !$row.is("[" + self.attributes.subrow + "]") && (!$row.is("[" + self.attributes.ignorerow + "]") || !hasColspan);
+			});
+		};
+
+		Table.prototype._getVisibleColspan = function () {
+			var colspan = 0;
+			this._getPrimaryHeaderCells().each(function () {
+				var $t = $(this);
+				if ($t.css("display") !== "none") {
+					colspan += parseInt($t.attr("colspan"), 10) || 1;
+				}
+			});
+			return colspan;
+		};
+
+		Table.prototype.getColspanForCell = function ($cell) {
+			var visibleColspan = this._getVisibleColspan();
+			var visibleSiblingColumns = 0;
+			if ($cell.closest("tr").data("tablesaw-rowspanned")) {
+				visibleSiblingColumns++;
+			}
+
+			$cell.siblings().each(function () {
+				var $t = $(this);
+				var colColspan = parseInt($t.attr("colspan"), 10) || 1;
+
+				if ($t.css("display") !== "none") {
+					visibleSiblingColumns += colColspan;
+				}
+			});
+			// console.log( $cell[ 0 ], visibleColspan, visibleSiblingColumns );
+
+			return visibleColspan - visibleSiblingColumns;
+		};
+
+		Table.prototype.isCellInColumn = function (header, cell) {
+			return $(header).add(header.cells).filter(function () {
+				return this === cell;
+			}).length;
+		};
+
+		Table.prototype.updateColspanCells = function (cls, header, userAction) {
+			var self = this;
+			var primaryHeaderRow = self._getPrimaryHeaderRow();
+
+			// find persistent column rowspans
+			this.$table.find("[rowspan][data-tablesaw-priority]").each(function () {
+				var $t = $(this);
+				if ($t.attr("data-tablesaw-priority") !== "persist") {
+					return;
+				}
+
+				var $row = $t.closest("tr");
+				var rowspan = parseInt($t.attr("rowspan"), 10);
+				if (rowspan > 1) {
+					$row = $row.next();
+
+					$row.data("tablesaw-rowspanned", true);
+
+					rowspan--;
+				}
+			});
+
+			this.$table.find("[colspan],[data-tablesaw-maxcolspan]").filter(function () {
+				// is not in primary header row
+				return $(this).closest("tr")[0] !== primaryHeaderRow[0];
+			}).each(function () {
+				var $cell = $(this);
+
+				if (userAction === undefined || self.isCellInColumn(header, this)) {} else {
+					// if is not a user action AND the cell is not in the updating column, kill it
+					return;
+				}
+
+				var colspan = self.getColspanForCell($cell);
+
+				if (cls && userAction !== undefined) {
+					// console.log( colspan === 0 ? "addClass" : "removeClass", $cell );
+					$cell[colspan === 0 ? "addClass" : "removeClass"](cls);
+				}
+
+				// cache original colspan
+				var maxColspan = parseInt($cell.attr("data-tablesaw-maxcolspan"), 10);
+				if (!maxColspan) {
+					$cell.attr("data-tablesaw-maxcolspan", $cell.attr("colspan"));
+				} else if (colspan > maxColspan) {
+					colspan = maxColspan;
+				}
+
+				// console.log( this, "setting colspan to ", colspan );
+				$cell.attr("colspan", colspan);
+			});
+		};
+
+		Table.prototype._findPrimaryHeadersForCell = function (cell) {
+			var $headerRow = this._getPrimaryHeaderRow();
+			var $headers = this._getPrimaryHeaderCells($headerRow);
+			var headerRowIndex = this._getRowIndex($headerRow);
+			var results = [];
+
+			for (var rowNumber = 0; rowNumber < this.headerMapping.length; rowNumber++) {
+				if (rowNumber === headerRowIndex) {
+					continue;
+				}
+				for (var colNumber = 0; colNumber < this.headerMapping[rowNumber].length; colNumber++) {
+					if (this.headerMapping[rowNumber][colNumber] === cell) {
+						results.push($headers[colNumber]);
+					}
+				}
+			}
+			return results;
+		};
+
+		// used by init cells
+		Table.prototype.getRows = function () {
+			var self = this;
+			return this.$table.find("tr").filter(function () {
+				return $(this).closest("table").is(self.$table);
+			});
+		};
+
+		// used by sortable
+		Table.prototype.getBodyRows = function (tbody) {
+			return (tbody ? $(tbody) : this.$tbody).children().filter("tr");
+		};
+
+		Table.prototype.getHeaderCellIndex = function (cell) {
+			var lookup = this.headerMapping[0];
+			for (var colIndex = 0; colIndex < lookup.length; colIndex++) {
+				if (lookup[colIndex] === cell) {
+					return colIndex;
+				}
+			}
+
+			return -1;
+		};
+
+		Table.prototype._initCells = function () {
+			// re-establish original colspans
+			this.$table.find("[data-tablesaw-maxcolspan]").each(function () {
+				var $t = $(this);
+				$t.attr("colspan", $t.attr("data-tablesaw-maxcolspan"));
+			});
+
+			var $rows = this.getRows();
+			var columnLookup = [];
+
+			$rows.each(function (rowNumber) {
+				columnLookup[rowNumber] = [];
+			});
+
+			$rows.each(function (rowNumber) {
+				var coltally = 0;
+				var $t = $(this);
+				var children = $t.children();
+
+				children.each(function () {
+					var colspan = parseInt(this.getAttribute("data-tablesaw-maxcolspan") || this.getAttribute("colspan"), 10);
+					var rowspan = parseInt(this.getAttribute("rowspan"), 10);
+
+					// set in a previous rowspan
+					while (columnLookup[rowNumber][coltally]) {
+						coltally++;
+					}
+
+					columnLookup[rowNumber][coltally] = this;
+
+					// TODO? both colspan and rowspan
+					if (colspan) {
+						for (var k = 0; k < colspan - 1; k++) {
+							coltally++;
+							columnLookup[rowNumber][coltally] = this;
+						}
+					}
+					if (rowspan) {
+						for (var j = 1; j < rowspan; j++) {
+							columnLookup[rowNumber + j][coltally] = this;
+						}
+					}
+
+					coltally++;
+				});
+			});
+
+			var headerRowIndeces = this._getHeaderRowIndeces();
+			for (var colNumber = 0; colNumber < columnLookup[0].length; colNumber++) {
+				for (var headerIndex = 0, k = headerRowIndeces.length; headerIndex < k; headerIndex++) {
+					var headerCol = columnLookup[headerRowIndeces[headerIndex]][colNumber];
+
+					var rowNumber = headerRowIndeces[headerIndex];
+					var rowCell;
+
+					if (!headerCol.cells) {
+						headerCol.cells = [];
+					}
+
+					while (rowNumber < columnLookup.length) {
+						rowCell = columnLookup[rowNumber][colNumber];
+
+						if (headerCol !== rowCell) {
+							headerCol.cells.push(rowCell);
+						}
+
+						rowNumber++;
+					}
+				}
+			}
+
+			this.headerMapping = columnLookup;
+		};
+
+		Table.prototype.refresh = function () {
+			this._initCells();
+
+			this.$table.trigger(events.refresh, [this]);
+		};
+
+		Table.prototype._getToolbarAnchor = function () {
+			var $parent = this.$table.parent();
+			if ($parent.is(".tablesaw-overflow")) {
+				return $parent;
+			}
+			return this.$table;
+		};
+
+		Table.prototype._getToolbar = function ($anchor) {
+			if (!$anchor) {
+				$anchor = this._getToolbarAnchor();
+			}
+			return $anchor.prev().filter("." + classes.toolbar);
+		};
+
+		Table.prototype.createToolbar = function () {
+			// Insert the toolbar
+			// TODO move this into a separate component
+			var $anchor = this._getToolbarAnchor();
+			var $toolbar = this._getToolbar($anchor);
+			if (!$toolbar.length) {
+				$toolbar = $("<div>").addClass(classes.toolbar).insertBefore($anchor);
+			}
+			this.$toolbar = $toolbar;
+
+			if (this.mode) {
+				this.$toolbar.addClass("tablesaw-mode-" + this.mode);
+			}
+		};
+
+		Table.prototype.destroy = function () {
+			// Don’t remove the toolbar, just erase the classes on it.
+			// Some of the table features are not yet destroy-friendly.
+			this._getToolbar().each(function () {
+				this.className = this.className.replace(/\btablesaw-mode\-\w*\b/gi, "");
+			});
+
+			var tableId = this.$table.attr("id");
+			$(document).off("." + tableId);
+			$(window).off("." + tableId);
+
+			// other plugins
+			this.$table.trigger(events.destroy, [this]);
+
+			this.$table.removeData(pluginName);
+		};
+
+		// Collection method.
+		$.fn[pluginName] = function () {
+			return this.each(function () {
+				var $t = $(this);
+
+				if ($t.data(pluginName)) {
+					return;
+				}
+
+				new Table(this);
+			});
+		};
+
+		var $doc = $(win.document);
+		$doc.on("enhance.tablesaw", function (e) {
+			// Cut the mustard
+			if (Tablesaw.mustard) {
+				$(e.target).find(initSelector).filter(initFilterSelector)[pluginName]();
+			}
+		});
+
+		// Avoid a resize during scroll:
+		// Some Mobile devices trigger a resize during scroll (sometimes when
+		// doing elastic stretch at the end of the document or from the
+		// location bar hide)
+		var isScrolling = false;
+		var scrollTimeout;
+		$doc.on("scroll.tablesaw", function () {
+			isScrolling = true;
+
+			win.clearTimeout(scrollTimeout);
+			scrollTimeout = win.setTimeout(function () {
+				isScrolling = false;
+			}, 300); // must be greater than the resize timeout below
+		});
+
+		var resizeTimeout;
+		$(win).on("resize", function () {
+			if (!isScrolling) {
+				win.clearTimeout(resizeTimeout);
+				resizeTimeout = win.setTimeout(function () {
+					$doc.trigger(events.resize);
+				}, 150); // must be less than the scrolling timeout above.
+			}
+		});
+
+		Tablesaw.Table = Table;
+	})();
+
+	(function () {
+		var classes = {
+			stackTable: "tablesaw-stack",
+			cellLabels: "tablesaw-cell-label",
+			cellContentLabels: "tablesaw-cell-content"
+		};
+
+		var data = {
+			key: "tablesaw-stack"
+		};
+
+		var attrs = {
+			labelless: "data-tablesaw-no-labels",
+			hideempty: "data-tablesaw-hide-empty"
+		};
+
+		var Stack = function (element, tablesaw) {
+			this.tablesaw = tablesaw;
+			this.$table = $(element);
+
+			this.labelless = this.$table.is("[" + attrs.labelless + "]");
+			this.hideempty = this.$table.is("[" + attrs.hideempty + "]");
+
+			this.$table.data(data.key, this);
+		};
+
+		Stack.prototype.init = function () {
+			this.$table.addClass(classes.stackTable);
+
+			if (this.labelless) {
+				return;
+			}
+
+			var self = this;
+
+			this.$table.find("th, td").filter(function () {
+				return !$(this).closest("thead").length;
+			}).filter(function () {
+				return !$(this).closest("tr").is("[" + attrs.labelless + "]") && (!self.hideempty || !!$(this).html());
+			}).each(function () {
+				var $newHeader = $(document.createElement("b")).addClass(classes.cellLabels);
+				var $cell = $(this);
+
+				$(self.tablesaw._findPrimaryHeadersForCell(this)).each(function (index) {
+					var $header = $(this.cloneNode(true));
+					// TODO decouple from sortable better
+					// Changed from .text() in https://github.com/filamentgroup/tablesaw/commit/b9c12a8f893ec192830ec3ba2d75f062642f935b
+					// to preserve structural html in headers, like <a>
+					var $sortableButton = $header.find(".tablesaw-sortable-btn");
+					$header.find(".tablesaw-sortable-arrow").remove();
+
+					// TODO decouple from checkall better
+					var $checkall = $header.find("[data-tablesaw-checkall]");
+					$checkall.closest("label").remove();
+					if ($checkall.length) {
+						$newHeader = $([]);
+						return;
+					}
+
+					if (index > 0) {
+						$newHeader.append(document.createTextNode(", "));
+					}
+					$newHeader.append($sortableButton.length ? $sortableButton[0].childNodes : $header[0].childNodes);
+				});
+
+				if ($newHeader.length && !$cell.find("." + classes.cellContentLabels).length) {
+					$cell.wrapInner("<span class='" + classes.cellContentLabels + "'></span>");
+				}
+
+				// Update if already exists.
+				var $label = $cell.find("." + classes.cellLabels);
+				if (!$label.length) {
+					$cell.prepend($newHeader);
+				} else {
+					// only if changed
+					$label.replaceWith($newHeader);
+				}
+			});
+		};
+
+		Stack.prototype.destroy = function () {
+			this.$table.removeClass(classes.stackTable);
+			this.$table.find("." + classes.cellLabels).remove();
+			this.$table.find("." + classes.cellContentLabels).each(function () {
+				$(this).replaceWith(this.childNodes);
+			});
+		};
+
+		// on tablecreate, init
+		$(document).on(Tablesaw.events.create, function (e, tablesaw) {
+			if (tablesaw.mode === "stack") {
+				var table = new Stack(tablesaw.table, tablesaw);
+				table.init();
+			}
+		}).on(Tablesaw.events.refresh, function (e, tablesaw) {
+			if (tablesaw.mode === "stack") {
+				$(tablesaw.table).data(data.key).init();
+			}
+		}).on(Tablesaw.events.destroy, function (e, tablesaw) {
+			if (tablesaw.mode === "stack") {
+				$(tablesaw.table).data(data.key).destroy();
+			}
+		});
+
+		Tablesaw.Stack = Stack;
+	})();
+
+	(function () {
+		var pluginName = "tablesawbtn",
+		    methods = {
+			_create: function () {
+				return $(this).each(function () {
+					$(this).trigger("beforecreate." + pluginName)[pluginName]("_init").trigger("create." + pluginName);
+				});
+			},
+			_init: function () {
+				var oEl = $(this),
+				    sel = this.getElementsByTagName("select")[0];
+
+				if (sel) {
+					// TODO next major version: remove .btn-select
+					$(this).addClass("btn-select tablesaw-btn-select")[pluginName]("_select", sel);
+				}
+				return oEl;
+			},
+			_select: function (sel) {
+				var update = function (oEl, sel) {
+					var opts = $(sel).find("option");
+					var label = document.createElement("span");
+					var el;
+					var children;
+					var found = false;
+
+					label.setAttribute("aria-hidden", "true");
+					label.innerHTML = "&#160;";
+
+					opts.each(function () {
+						var opt = this;
+						if (opt.selected) {
+							label.innerHTML = opt.text;
+						}
+					});
+
+					children = oEl.childNodes;
+					if (opts.length > 0) {
+						for (var i = 0, l = children.length; i < l; i++) {
+							el = children[i];
+
+							if (el && el.nodeName.toUpperCase() === "SPAN") {
+								oEl.replaceChild(label, el);
+								found = true;
+							}
+						}
+
+						if (!found) {
+							oEl.insertBefore(label, oEl.firstChild);
+						}
+					}
+				};
+
+				update(this, sel);
+				// todo should this be tablesawrefresh?
+				$(this).on("change refresh", function () {
+					update(this, sel);
+				});
+			}
+		};
+
+		// Collection method.
+		$.fn[pluginName] = function (arrg, a, b, c) {
+			return this.each(function () {
+				// if it's a method
+				if (arrg && typeof arrg === "string") {
+					return $.fn[pluginName].prototype[arrg].call(this, a, b, c);
+				}
+
+				// don't re-init
+				if ($(this).data(pluginName + "active")) {
+					return $(this);
+				}
+
+				$(this).data(pluginName + "active", true);
+
+				$.fn[pluginName].prototype._create.call(this);
+			});
+		};
+
+		// add methods
+		$.extend($.fn[pluginName].prototype, methods);
+
+		// TODO OOP this and add to Tablesaw object
+	})();
+
+	(function () {
+		var data = {
+			key: "tablesaw-coltoggle"
+		};
+
+		var ColumnToggle = function (element) {
+			this.$table = $(element);
+
+			if (!this.$table.length) {
+				return;
+			}
+
+			this.tablesaw = this.$table.data("tablesaw");
+
+			this.attributes = {
+				btnTarget: "data-tablesaw-columntoggle-btn-target",
+				set: "data-tablesaw-columntoggle-set"
+			};
+
+			this.classes = {
+				columnToggleTable: "tablesaw-columntoggle",
+				columnBtnContain: "tablesaw-columntoggle-btnwrap tablesaw-advance",
+				columnBtn: "tablesaw-columntoggle-btn tablesaw-nav-btn down",
+				popup: "tablesaw-columntoggle-popup",
+				priorityPrefix: "tablesaw-priority-"
+			};
+
+			this.set = [];
+			this.$headers = this.tablesaw._getPrimaryHeaderCells();
+
+			this.$table.data(data.key, this);
+		};
+
+		// Column Toggle Sets (one column chooser can control multiple tables)
+		ColumnToggle.prototype.initSet = function () {
+			var set = this.$table.attr(this.attributes.set);
+			if (set) {
+				// Should not include the current table
+				var table = this.$table[0];
+				this.set = $("table[" + this.attributes.set + "='" + set + "']").filter(function () {
+					return this !== table;
+				}).get();
+			}
+		};
+
+		ColumnToggle.prototype.init = function () {
+			if (!this.$table.length) {
+				return;
+			}
+
+			var tableId,
+			    id,
+			    $menuButton,
+			    $popup,
+			    $menu,
+			    $btnContain,
+			    self = this;
+
+			var cfg = this.tablesaw.getConfig({
+				getColumnToggleLabelTemplate: function (text) {
+					return "<label><input type='checkbox' checked>" + text + "</label>";
+				}
+			});
+
+			this.$table.addClass(this.classes.columnToggleTable);
+
+			tableId = this.$table.attr("id");
+			id = tableId + "-popup";
+			$btnContain = $("<div class='" + this.classes.columnBtnContain + "'></div>");
+			// TODO next major version: remove .btn
+			$menuButton = $("<a href='#" + id + "' class='btn tablesaw-btn btn-micro " + this.classes.columnBtn + "' data-popup-link>" + "<span>" + Tablesaw.i18n.columnToggleButton + "</span></a>");
+			$popup = $("<div class='" + this.classes.popup + "' id='" + id + "'></div>");
+			$menu = $("<div class='btn-group'></div>");
+
+			this.$popup = $popup;
+
+			var hasNonPersistentHeaders = false;
+			this.$headers.each(function () {
+				var $this = $(this),
+				    priority = $this.attr("data-tablesaw-priority"),
+				    $cells = self.tablesaw._$getCells(this);
+
+				if (priority && priority !== "persist") {
+					$cells.addClass(self.classes.priorityPrefix + priority);
+
+					$(cfg.getColumnToggleLabelTemplate($this.text())).appendTo($menu).find('input[type="checkbox"]').data("tablesaw-header", this);
+
+					hasNonPersistentHeaders = true;
+				}
+			});
+
+			if (!hasNonPersistentHeaders) {
+				$menu.append("<label>" + Tablesaw.i18n.columnToggleError + "</label>");
+			}
+
+			$menu.appendTo($popup);
+
+			function onToggleCheckboxChange(checkbox) {
+				var checked = checkbox.checked;
+
+				var header = self.getHeaderFromCheckbox(checkbox);
+				var $cells = self.tablesaw._$getCells(header);
+
+				$cells[!checked ? "addClass" : "removeClass"]("tablesaw-toggle-cellhidden");
+				$cells[checked ? "addClass" : "removeClass"]("tablesaw-toggle-cellvisible");
+
+				self.updateColspanCells(header, checked);
+
+				self.$table.trigger("tablesawcolumns");
+			}
+
+			// bind change event listeners to inputs - TODO: move to a private method?
+			$menu.find('input[type="checkbox"]').on("change", function (e) {
+				onToggleCheckboxChange(e.target);
+
+				if (self.set.length) {
+					var index;
+					$(self.$popup).find("input[type='checkbox']").each(function (j) {
+						if (this === e.target) {
+							index = j;
+							return false;
+						}
+					});
+
+					$(self.set).each(function () {
+						var checkbox = $(this).data(data.key).$popup.find("input[type='checkbox']").get(index);
+						if (checkbox) {
+							checkbox.checked = e.target.checked;
+							onToggleCheckboxChange(checkbox);
+						}
+					});
+				}
+			});
+
+			$menuButton.appendTo($btnContain);
+
+			// Use a different target than the toolbar
+			var $btnTarget = $(this.$table.attr(this.attributes.btnTarget));
+			$btnContain.appendTo($btnTarget.length ? $btnTarget : this.tablesaw.$toolbar);
+
+			function closePopup(event) {
+				// Click came from inside the popup, ignore.
+				if (event && $(event.target).closest("." + self.classes.popup).length) {
+					return;
+				}
+
+				$(document).off("click." + tableId);
+				$menuButton.removeClass("up").addClass("down");
+				$btnContain.removeClass("visible");
+			}
+
+			var closeTimeout;
+			function openPopup() {
+				$btnContain.addClass("visible");
+				$menuButton.removeClass("down").addClass("up");
+
+				$(document).off("click." + tableId, closePopup);
+
+				window.clearTimeout(closeTimeout);
+				closeTimeout = window.setTimeout(function () {
+					$(document).on("click." + tableId, closePopup);
+				}, 15);
+			}
+
+			$menuButton.on("click.tablesaw", function (event) {
+				event.preventDefault();
+
+				if (!$btnContain.is(".visible")) {
+					openPopup();
+				} else {
+					closePopup();
+				}
+			});
+
+			$popup.appendTo($btnContain);
+
+			this.$menu = $menu;
+
+			// Fix for iOS not rendering shadows correctly when using `-webkit-overflow-scrolling`
+			var $overflow = this.$table.closest(".tablesaw-overflow");
+			if ($overflow.css("-webkit-overflow-scrolling")) {
+				var timeout;
+				$overflow.on("scroll", function () {
+					var $div = $(this);
+					window.clearTimeout(timeout);
+					timeout = window.setTimeout(function () {
+						$div.css("-webkit-overflow-scrolling", "auto");
+						window.setTimeout(function () {
+							$div.css("-webkit-overflow-scrolling", "touch");
+						}, 0);
+					}, 100);
+				});
+			}
+
+			$(window).on(Tablesaw.events.resize + "." + tableId, function () {
+				self.refreshToggle();
+			});
+
+			this.initSet();
+			this.refreshToggle();
+		};
+
+		ColumnToggle.prototype.getHeaderFromCheckbox = function (checkbox) {
+			return $(checkbox).data("tablesaw-header");
+		};
+
+		ColumnToggle.prototype.refreshToggle = function () {
+			var self = this;
+			var invisibleColumns = 0;
+			this.$menu.find("input").each(function () {
+				var header = self.getHeaderFromCheckbox(this);
+				this.checked = self.tablesaw._$getCells(header).eq(0).css("display") === "table-cell";
+			});
+
+			this.updateColspanCells();
+		};
+
+		ColumnToggle.prototype.updateColspanCells = function (header, userAction) {
+			this.tablesaw.updateColspanCells("tablesaw-toggle-cellhidden", header, userAction);
+		};
+
+		ColumnToggle.prototype.destroy = function () {
+			this.$table.removeClass(this.classes.columnToggleTable);
+			this.$table.find("th, td").each(function () {
+				var $cell = $(this);
+				$cell.removeClass("tablesaw-toggle-cellhidden").removeClass("tablesaw-toggle-cellvisible");
+
+				this.className = this.className.replace(/\bui\-table\-priority\-\d\b/g, "");
+			});
+		};
+
+		// on tablecreate, init
+		$(document).on(Tablesaw.events.create, function (e, tablesaw) {
+			if (tablesaw.mode === "columntoggle") {
+				var table = new ColumnToggle(tablesaw.table);
+				table.init();
+			}
+		});
+
+		$(document).on(Tablesaw.events.destroy, function (e, tablesaw) {
+			if (tablesaw.mode === "columntoggle") {
+				$(tablesaw.table).data(data.key).destroy();
+			}
+		});
+
+		$(document).on(Tablesaw.events.refresh, function (e, tablesaw) {
+			if (tablesaw.mode === "columntoggle") {
+				$(tablesaw.table).data(data.key).refreshPriority();
+			}
+		});
+
+		Tablesaw.ColumnToggle = ColumnToggle;
+	})();
+
+	(function () {
+		function getSortValue(cell) {
+			var text = [];
+			$(cell.childNodes).each(function () {
+				var $el = $(this);
+				if ($el.is("input, select")) {
+					text.push($el.val());
+				} else if ($el.is(".tablesaw-cell-label")) {} else {
+					text.push(($el.text() || "").replace(/^\s+|\s+$/g, ""));
+				}
+			});
+
+			return text.join("");
+		}
+
+		var pluginName = "tablesaw-sortable",
+		    initSelector = "table[data-" + pluginName + "]",
+		    sortableSwitchSelector = "[data-" + pluginName + "-switch]",
+		    attrs = {
+			sortCol: "data-tablesaw-sortable-col",
+			defaultCol: "data-tablesaw-sortable-default-col",
+			numericCol: "data-tablesaw-sortable-numeric",
+			subRow: "data-tablesaw-subrow",
+			ignoreRow: "data-tablesaw-ignorerow"
+		},
+		    classes = {
+			head: pluginName + "-head",
+			ascend: pluginName + "-ascending",
+			descend: pluginName + "-descending",
+			switcher: pluginName + "-switch",
+			tableToolbar: "tablesaw-bar-section",
+			sortButton: pluginName + "-btn"
+		},
+		    methods = {
+			_create: function (o) {
+				return $(this).each(function () {
+					var init = $(this).data(pluginName + "-init");
+					if (init) {
+						return false;
+					}
+					$(this).data(pluginName + "-init", true).trigger("beforecreate." + pluginName)[pluginName]("_init", o).trigger("create." + pluginName);
+				});
+			},
+			_init: function () {
+				var el = $(this);
+				var tblsaw = el.data("tablesaw");
+				var heads;
+				var $switcher;
+
+				function addClassToHeads(h) {
+					$.each(h, function (i, v) {
+						$(v).addClass(classes.head);
+					});
+				}
+
+				function makeHeadsActionable(h, fn) {
+					$.each(h, function (i, col) {
+						var b = $("<button class='" + classes.sortButton + "'/>");
+						b.on("click", { col: col }, fn);
+						$(col).wrapInner(b).find("button").append("<span class='tablesaw-sortable-arrow'>");
+					});
+				}
+
+				function clearOthers(headcells) {
+					$.each(headcells, function (i, v) {
+						var col = $(v);
+						col.removeAttr(attrs.defaultCol);
+						col.removeClass(classes.ascend);
+						col.removeClass(classes.descend);
+					});
+				}
+
+				function headsOnAction(e) {
+					if ($(e.target).is("a[href]")) {
+						return;
+					}
+
+					e.stopPropagation();
+					var headCell = $(e.target).closest("[" + attrs.sortCol + "]"),
+					    v = e.data.col,
+					    newSortValue = heads.index(headCell[0]);
+
+					clearOthers(headCell.closest("thead").find("th").filter(function () {
+						return this !== headCell[0];
+					}));
+					if (headCell.is("." + classes.descend) || !headCell.is("." + classes.ascend)) {
+						el[pluginName]("sortBy", v, true);
+						newSortValue += "_asc";
+					} else {
+						el[pluginName]("sortBy", v);
+						newSortValue += "_desc";
+					}
+					if ($switcher) {
+						$switcher.find("select").val(newSortValue).trigger("refresh");
+					}
+
+					e.preventDefault();
+				}
+
+				function handleDefault(heads) {
+					$.each(heads, function (idx, el) {
+						var $el = $(el);
+						if ($el.is("[" + attrs.defaultCol + "]")) {
+							if (!$el.is("." + classes.descend)) {
+								$el.addClass(classes.ascend);
+							}
+						}
+					});
+				}
+
+				function addSwitcher(heads) {
+					$switcher = $("<div>").addClass(classes.switcher).addClass(classes.tableToolbar);
+
+					var html = ["<label>" + Tablesaw.i18n.sort + ":"];
+
+					// TODO next major version: remove .btn
+					html.push('<span class="btn tablesaw-btn"><select>');
+					heads.each(function (j) {
+						var $t = $(this);
+						var isDefaultCol = $t.is("[" + attrs.defaultCol + "]");
+						var isDescending = $t.is("." + classes.descend);
+
+						var hasNumericAttribute = $t.is("[" + attrs.numericCol + "]");
+						var numericCount = 0;
+						// Check only the first four rows to see if the column is numbers.
+						var numericCountMax = 5;
+
+						$(this.cells.slice(0, numericCountMax)).each(function () {
+							if (!isNaN(parseInt(getSortValue(this), 10))) {
+								numericCount++;
+							}
+						});
+						var isNumeric = numericCount === numericCountMax;
+						if (!hasNumericAttribute) {
+							$t.attr(attrs.numericCol, isNumeric ? "" : "false");
+						}
+
+						html.push("<option" + (isDefaultCol && !isDescending ? " selected" : "") + ' value="' + j + '_asc">' + $t.text() + " " + (isNumeric ? "&#x2191;" : "(A-Z)") + "</option>");
+						html.push("<option" + (isDefaultCol && isDescending ? " selected" : "") + ' value="' + j + '_desc">' + $t.text() + " " + (isNumeric ? "&#x2193;" : "(Z-A)") + "</option>");
+					});
+					html.push("</select></span></label>");
+
+					$switcher.html(html.join(""));
+
+					var $firstChild = tblsaw.$toolbar.children().eq(0);
+					if ($firstChild.length) {
+						$switcher.insertBefore($firstChild);
+					} else {
+						$switcher.appendTo(tblsaw.$toolbar);
+					}
+					$switcher.find(".tablesaw-btn").tablesawbtn();
+					$switcher.find("select").on("change", function () {
+						var val = $(this).val().split("_"),
+						    head = heads.eq(val[0]);
+
+						clearOthers(head.siblings());
+						el[pluginName]("sortBy", head.get(0), val[1] === "asc");
+					});
+				}
+
+				el.addClass(pluginName);
+
+				heads = el.children().filter("thead").find("th[" + attrs.sortCol + "]");
+
+				addClassToHeads(heads);
+				makeHeadsActionable(heads, headsOnAction);
+				handleDefault(heads);
+
+				if (el.is(sortableSwitchSelector)) {
+					addSwitcher(heads);
+				}
+			},
+			sortRows: function (rows, colNum, ascending, col, tbody) {
+				function convertCells(cellArr, belongingToTbody) {
+					var cells = [];
+					$.each(cellArr, function (i, cell) {
+						var row = cell.parentNode;
+						var $row = $(row);
+						// next row is a subrow
+						var subrows = [];
+						var $next = $row.next();
+						while ($next.is("[" + attrs.subRow + "]")) {
+							subrows.push($next[0]);
+							$next = $next.next();
+						}
+
+						var tbody = row.parentNode;
+
+						// current row is a subrow
+						if ($row.is("[" + attrs.subRow + "]")) {} else if (tbody === belongingToTbody) {
+							cells.push({
+								element: cell,
+								cell: getSortValue(cell),
+								row: row,
+								subrows: subrows.length ? subrows : null,
+								ignored: $row.is("[" + attrs.ignoreRow + "]")
+							});
+						}
+					});
+					return cells;
+				}
+
+				function getSortFxn(ascending, forceNumeric) {
+					var fn,
+					    regex = /[^\-\+\d\.]/g;
+					if (ascending) {
+						fn = function (a, b) {
+							if (a.ignored || b.ignored) {
+								return 0;
+							}
+							if (forceNumeric) {
+								return parseFloat(a.cell.replace(regex, "")) - parseFloat(b.cell.replace(regex, ""));
+							} else {
+								return a.cell.toLowerCase() > b.cell.toLowerCase() ? 1 : -1;
+							}
+						};
+					} else {
+						fn = function (a, b) {
+							if (a.ignored || b.ignored) {
+								return 0;
+							}
+							if (forceNumeric) {
+								return parseFloat(b.cell.replace(regex, "")) - parseFloat(a.cell.replace(regex, ""));
+							} else {
+								return a.cell.toLowerCase() < b.cell.toLowerCase() ? 1 : -1;
+							}
+						};
+					}
+					return fn;
+				}
+
+				function convertToRows(sorted) {
+					var newRows = [],
+					    i,
+					    l;
+					for (i = 0, l = sorted.length; i < l; i++) {
+						newRows.push(sorted[i].row);
+						if (sorted[i].subrows) {
+							newRows.push(sorted[i].subrows);
+						}
+					}
+					return newRows;
+				}
+
+				var fn;
+				var sorted;
+				var cells = convertCells(col.cells, tbody);
+
+				var customFn = $(col).data("tablesaw-sort");
+
+				fn = (customFn && typeof customFn === "function" ? customFn(ascending) : false) || getSortFxn(ascending, $(col).is("[" + attrs.numericCol + "]") && !$(col).is("[" + attrs.numericCol + '="false"]'));
+
+				sorted = cells.sort(fn);
+
+				rows = convertToRows(sorted);
+
+				return rows;
+			},
+			makeColDefault: function (col, a) {
+				var c = $(col);
+				c.attr(attrs.defaultCol, "true");
+				if (a) {
+					c.removeClass(classes.descend);
+					c.addClass(classes.ascend);
+				} else {
+					c.removeClass(classes.ascend);
+					c.addClass(classes.descend);
+				}
+			},
+			sortBy: function (col, ascending) {
+				var el = $(this);
+				var colNum;
+				var tbl = el.data("tablesaw");
+				tbl.$tbody.each(function () {
+					var tbody = this;
+					var $tbody = $(this);
+					var rows = tbl.getBodyRows(tbody);
+					var sortedRows;
+					var map = tbl.headerMapping[0];
+					var j, k;
+
+					// find the column number that we’re sorting
+					for (j = 0, k = map.length; j < k; j++) {
+						if (map[j] === col) {
+							colNum = j;
+							break;
+						}
+					}
+
+					sortedRows = el[pluginName]("sortRows", rows, colNum, ascending, col, tbody);
+
+					// replace Table rows
+					for (j = 0, k = sortedRows.length; j < k; j++) {
+						$tbody.append(sortedRows[j]);
+					}
+				});
+
+				el[pluginName]("makeColDefault", col, ascending);
+
+				el.trigger("tablesaw-sorted");
+			}
+		};
+
+		// Collection method.
+		$.fn[pluginName] = function (arrg) {
+			var args = Array.prototype.slice.call(arguments, 1),
+			    returnVal;
+
+			// if it's a method
+			if (arrg && typeof arrg === "string") {
+				returnVal = $.fn[pluginName].prototype[arrg].apply(this[0], args);
+				return typeof returnVal !== "undefined" ? returnVal : $(this);
+			}
+			// check init
+			if (!$(this).data(pluginName + "-active")) {
+				$(this).data(pluginName + "-active", true);
+				$.fn[pluginName].prototype._create.call(this, arrg);
+			}
+			return $(this);
+		};
+		// add methods
+		$.extend($.fn[pluginName].prototype, methods);
+
+		$(document).on(Tablesaw.events.create, function (e, Tablesaw) {
+			if (Tablesaw.$table.is(initSelector)) {
+				Tablesaw.$table[pluginName]();
+			}
+		});
+
+		// TODO OOP this and add to Tablesaw object
+	})();
+
+	(function () {
+		var classes = {
+			hideBtn: "disabled",
+			persistWidths: "tablesaw-fix-persist",
+			hiddenCol: "tablesaw-swipe-cellhidden",
+			persistCol: "tablesaw-swipe-cellpersist",
+			allColumnsVisible: "tablesaw-all-cols-visible"
+		};
+		var attrs = {
+			disableTouchEvents: "data-tablesaw-no-touch",
+			ignorerow: "data-tablesaw-ignorerow",
+			subrow: "data-tablesaw-subrow"
+		};
+
+		function createSwipeTable(tbl, $table) {
+			var tblsaw = $table.data("tablesaw");
+
+			var $btns = $("<div class='tablesaw-advance'></div>");
+			// TODO next major version: remove .btn
+			var $prevBtn = $("<a href='#' class='btn tablesaw-nav-btn tablesaw-btn btn-micro left'>" + Tablesaw.i18n.swipePreviousColumn + "</a>").appendTo($btns);
+			// TODO next major version: remove .btn
+			var $nextBtn = $("<a href='#' class='btn tablesaw-nav-btn tablesaw-btn btn-micro right'>" + Tablesaw.i18n.swipeNextColumn + "</a>").appendTo($btns);
+
+			var $headerCells = tbl._getPrimaryHeaderCells();
+			var $headerCellsNoPersist = $headerCells.not('[data-tablesaw-priority="persist"]');
+			var headerWidths = [];
+			var $head = $(document.head || "head");
+			var tableId = $table.attr("id");
+
+			if (!$headerCells.length) {
+				throw new Error("tablesaw swipe: no header cells found.");
+			}
+
+			$table.addClass("tablesaw-swipe");
+
+			function initMinHeaderWidths() {
+				$table.css({
+					width: "1px"
+				});
+
+				// remove any hidden columns
+				$table.find("." + classes.hiddenCol).removeClass(classes.hiddenCol);
+
+				headerWidths = [];
+				// Calculate initial widths
+				$headerCells.each(function () {
+					headerWidths.push(this.offsetWidth);
+				});
+
+				// reset props
+				$table.css({
+					width: ""
+				});
+			}
+
+			initMinHeaderWidths();
+
+			$btns.appendTo(tblsaw.$toolbar);
+
+			if (!tableId) {
+				tableId = "tableswipe-" + Math.round(Math.random() * 10000);
+				$table.attr("id", tableId);
+			}
+
+			function showColumn(headerCell) {
+				tblsaw._$getCells(headerCell).removeClass(classes.hiddenCol);
+			}
+
+			function hideColumn(headerCell) {
+				tblsaw._$getCells(headerCell).addClass(classes.hiddenCol);
+			}
+
+			function persistColumn(headerCell) {
+				tblsaw._$getCells(headerCell).addClass(classes.persistCol);
+			}
+
+			function isPersistent(headerCell) {
+				return $(headerCell).is('[data-tablesaw-priority="persist"]');
+			}
+
+			function unmaintainWidths() {
+				$table.removeClass(classes.persistWidths);
+				$("#" + tableId + "-persist").remove();
+			}
+
+			function maintainWidths() {
+				var prefix = "#" + tableId + ".tablesaw-swipe ",
+				    styles = [],
+				    tableWidth = $table.width(),
+				    hash = [],
+				    newHash;
+
+				// save persistent column widths (as long as they take up less than 75% of table width)
+				$headerCells.each(function (index) {
+					var width;
+					if (isPersistent(this)) {
+						width = this.offsetWidth;
+
+						if (width < tableWidth * 0.75) {
+							hash.push(index + "-" + width);
+							styles.push(prefix + " ." + classes.persistCol + ":nth-child(" + (index + 1) + ") { width: " + width + "px; }");
+						}
+					}
+				});
+				newHash = hash.join("_");
+
+				if (styles.length) {
+					$table.addClass(classes.persistWidths);
+					var $style = $("#" + tableId + "-persist");
+					// If style element not yet added OR if the widths have changed
+					if (!$style.length || $style.data("tablesaw-hash") !== newHash) {
+						// Remove existing
+						$style.remove();
+
+						$("<style>" + styles.join("\n") + "</style>").attr("id", tableId + "-persist").data("tablesaw-hash", newHash).appendTo($head);
+					}
+				}
+			}
+
+			function getNext() {
+				var next = [],
+				    checkFound;
+
+				$headerCellsNoPersist.each(function (i) {
+					var $t = $(this),
+					    isHidden = $t.css("display") === "none" || $t.is("." + classes.hiddenCol);
+
+					if (!isHidden && !checkFound) {
+						checkFound = true;
+						next[0] = i;
+					} else if (isHidden && checkFound) {
+						next[1] = i;
+
+						return false;
+					}
+				});
+
+				return next;
+			}
+
+			function getPrev() {
+				var next = getNext();
+				return [next[1] - 1, next[0] - 1];
+			}
+
+			function nextpair(fwd) {
+				return fwd ? getNext() : getPrev();
+			}
+
+			function canAdvance(pair) {
+				return pair[1] > -1 && pair[1] < $headerCellsNoPersist.length;
+			}
+
+			function matchesMedia() {
+				var matchMedia = $table.attr("data-tablesaw-swipe-media");
+				return !matchMedia || "matchMedia" in win && win.matchMedia(matchMedia).matches;
+			}
+
+			function fakeBreakpoints() {
+				if (!matchesMedia()) {
+					return;
+				}
+
+				var containerWidth = $table.parent().width(),
+				    persist = [],
+				    sum = 0,
+				    sums = [],
+				    visibleNonPersistantCount = $headerCells.length;
+
+				$headerCells.each(function (index) {
+					var $t = $(this),
+					    isPersist = $t.is('[data-tablesaw-priority="persist"]');
+
+					persist.push(isPersist);
+					sum += headerWidths[index];
+					sums.push(sum);
+
+					// is persistent or is hidden
+					if (isPersist || sum > containerWidth) {
+						visibleNonPersistantCount--;
+					}
+				});
+
+				// We need at least one column to swipe.
+				var needsNonPersistentColumn = visibleNonPersistantCount === 0;
+
+				$headerCells.each(function (index) {
+					if (sums[index] > containerWidth) {
+						hideColumn(this);
+					}
+				});
+
+				$headerCells.each(function (index) {
+					if (persist[index]) {
+						// for visual box-shadow
+						persistColumn(this);
+						return;
+					}
+
+					if (sums[index] <= containerWidth || needsNonPersistentColumn) {
+						needsNonPersistentColumn = false;
+						showColumn(this);
+						tblsaw.updateColspanCells(classes.hiddenCol, this, true);
+					}
+				});
+
+				unmaintainWidths();
+
+				$table.trigger("tablesawcolumns");
+			}
+
+			function advance(fwd) {
+				var pair = nextpair(fwd);
+				if (canAdvance(pair)) {
+					if (isNaN(pair[0])) {
+						if (fwd) {
+							pair[0] = 0;
+						} else {
+							pair[0] = $headerCellsNoPersist.length - 1;
+						}
+					}
+
+					// TODO just blindly hiding the previous column and showing the next column can result in
+					// column content overflow
+					maintainWidths();
+					hideColumn($headerCellsNoPersist.get(pair[0]));
+					tblsaw.updateColspanCells(classes.hiddenCol, $headerCellsNoPersist.get(pair[0]), false);
+
+					showColumn($headerCellsNoPersist.get(pair[1]));
+					tblsaw.updateColspanCells(classes.hiddenCol, $headerCellsNoPersist.get(pair[1]), true);
+
+					$table.trigger("tablesawcolumns");
+				}
+			}
+
+			$prevBtn.add($nextBtn).on("click", function (e) {
+				advance(!!$(e.target).closest($nextBtn).length);
+				e.preventDefault();
+			});
+
+			function getCoord(event, key) {
+				return (event.touches || event.originalEvent.touches)[0][key];
+			}
+
+			if (!$table.is("[" + attrs.disableTouchEvents + "]")) {
+				$table.on("touchstart.swipetoggle", function (e) {
+					var originX = getCoord(e, "pageX");
+					var originY = getCoord(e, "pageY");
+					var x;
+					var y;
+					var scrollTop = window.pageYOffset;
+
+					$(win).off(Tablesaw.events.resize, fakeBreakpoints);
+
+					$(this).on("touchmove.swipetoggle", function (e) {
+						x = getCoord(e, "pageX");
+						y = getCoord(e, "pageY");
+					}).on("touchend.swipetoggle", function () {
+						var cfg = tbl.getConfig({
+							swipeHorizontalThreshold: 30,
+							swipeVerticalThreshold: 30
+						});
+
+						// This config code is a little awkward because shoestring doesn’t support deep $.extend
+						// Trying to work around when devs only override one of (not both) horizontalThreshold or
+						// verticalThreshold in their TablesawConfig.
+						// @TODO major version bump: remove cfg.swipe, move to just use the swipePrefix keys
+						var verticalThreshold = cfg.swipe ? cfg.swipe.verticalThreshold : cfg.swipeVerticalThreshold;
+						var horizontalThreshold = cfg.swipe ? cfg.swipe.horizontalThreshold : cfg.swipeHorizontalThreshold;
+
+						var isPageScrolled = Math.abs(window.pageYOffset - scrollTop) >= verticalThreshold;
+						var isVerticalSwipe = Math.abs(y - originY) >= verticalThreshold;
+
+						if (!isVerticalSwipe && !isPageScrolled) {
+							if (x - originX < -1 * horizontalThreshold) {
+								advance(true);
+							}
+							if (x - originX > horizontalThreshold) {
+								advance(false);
+							}
+						}
+
+						window.setTimeout(function () {
+							$(win).on(Tablesaw.events.resize, fakeBreakpoints);
+						}, 300);
+
+						$(this).off("touchmove.swipetoggle touchend.swipetoggle");
+					});
+				});
+			}
+
+			$table.on("tablesawcolumns.swipetoggle", function () {
+				var canGoPrev = canAdvance(getPrev());
+				var canGoNext = canAdvance(getNext());
+				$prevBtn[canGoPrev ? "removeClass" : "addClass"](classes.hideBtn);
+				$nextBtn[canGoNext ? "removeClass" : "addClass"](classes.hideBtn);
+
+				tblsaw.$toolbar[!canGoPrev && !canGoNext ? "addClass" : "removeClass"](classes.allColumnsVisible);
+			}).on("tablesawnext.swipetoggle", function () {
+				advance(true);
+			}).on("tablesawprev.swipetoggle", function () {
+				advance(false);
+			}).on(Tablesaw.events.destroy + ".swipetoggle", function () {
+				var $t = $(this);
+
+				$t.removeClass("tablesaw-swipe");
+				tblsaw.$toolbar.find(".tablesaw-advance").remove();
+				$(win).off(Tablesaw.events.resize, fakeBreakpoints);
+
+				$t.off(".swipetoggle");
+			}).on(Tablesaw.events.refresh, function () {
+				unmaintainWidths();
+				initMinHeaderWidths();
+				fakeBreakpoints();
+			});
+
+			fakeBreakpoints();
+			$(win).on(Tablesaw.events.resize, fakeBreakpoints);
+		}
+
+		// on tablecreate, init
+		$(document).on(Tablesaw.events.create, function (e, tablesaw) {
+			if (tablesaw.mode === "swipe") {
+				createSwipeTable(tablesaw, tablesaw.$table);
+			}
+		});
+
+		// TODO OOP this and add to Tablesaw object
+	})();
+
+	(function () {
+		var MiniMap = {
+			attr: {
+				init: "data-tablesaw-minimap"
+			},
+			show: function (table) {
+				var mq = table.getAttribute(MiniMap.attr.init);
+
+				if (mq === "") {
+					// value-less but exists
+					return true;
+				} else if (mq && "matchMedia" in win) {
+					// has a mq value
+					return win.matchMedia(mq).matches;
+				}
+
+				return false;
+			}
+		};
+
+		function createMiniMap($table) {
+			var tblsaw = $table.data("tablesaw");
+			var $btns = $('<div class="tablesaw-advance minimap">');
+			var $dotNav = $('<ul class="tablesaw-advance-dots">').appendTo($btns);
+			var hideDot = "tablesaw-advance-dots-hide";
+			var $headerCells = $table.data("tablesaw")._getPrimaryHeaderCells();
+
+			// populate dots
+			$headerCells.each(function () {
+				$dotNav.append("<li><i></i></li>");
+			});
+
+			$btns.appendTo(tblsaw.$toolbar);
+
+			function showHideNav() {
+				if (!MiniMap.show($table[0])) {
+					$btns.css("display", "none");
+					return;
+				}
+				$btns.css("display", "block");
+
+				// show/hide dots
+				var dots = $dotNav.find("li").removeClass(hideDot);
+				$table.find("thead th").each(function (i) {
+					if ($(this).css("display") === "none") {
+						dots.eq(i).addClass(hideDot);
+					}
+				});
+			}
+
+			// run on init and resize
+			showHideNav();
+			$(win).on(Tablesaw.events.resize, showHideNav);
+
+			$table.on("tablesawcolumns.minimap", function () {
+				showHideNav();
+			}).on(Tablesaw.events.destroy + ".minimap", function () {
+				var $t = $(this);
+
+				tblsaw.$toolbar.find(".tablesaw-advance").remove();
+				$(win).off(Tablesaw.events.resize, showHideNav);
+
+				$t.off(".minimap");
+			});
+		}
+
+		// on tablecreate, init
+		$(document).on(Tablesaw.events.create, function (e, tablesaw) {
+			if ((tablesaw.mode === "swipe" || tablesaw.mode === "columntoggle") && tablesaw.$table.is("[ " + MiniMap.attr.init + "]")) {
+				createMiniMap(tablesaw.$table);
+			}
+		});
+
+		// TODO OOP this better
+		Tablesaw.MiniMap = MiniMap;
+	})();
+
+	(function () {
+		var S = {
+			selectors: {
+				init: "table[data-tablesaw-mode-switch]"
+			},
+			attributes: {
+				excludeMode: "data-tablesaw-mode-exclude"
+			},
+			classes: {
+				main: "tablesaw-modeswitch",
+				toolbar: "tablesaw-bar-section"
+			},
+			modes: ["stack", "swipe", "columntoggle"],
+			init: function (table) {
+				var $table = $(table);
+				var tblsaw = $table.data("tablesaw");
+				var ignoreMode = $table.attr(S.attributes.excludeMode);
+				var $toolbar = tblsaw.$toolbar;
+				var $switcher = $("<div>").addClass(S.classes.main + " " + S.classes.toolbar);
+
+				var html = ['<label><span class="abbreviated">' + Tablesaw.i18n.modeSwitchColumnsAbbreviated + '</span><span class="longform">' + Tablesaw.i18n.modeSwitchColumns + "</span>:"],
+				    dataMode = $table.attr("data-tablesaw-mode"),
+				    isSelected;
+
+				// TODO next major version: remove .btn
+				html.push('<span class="btn tablesaw-btn"><select>');
+				for (var j = 0, k = S.modes.length; j < k; j++) {
+					if (ignoreMode && ignoreMode.toLowerCase() === S.modes[j]) {
+						continue;
+					}
+
+					isSelected = dataMode === S.modes[j];
+
+					html.push("<option" + (isSelected ? " selected" : "") + ' value="' + S.modes[j] + '">' + Tablesaw.i18n.modes[j] + "</option>");
+				}
+				html.push("</select></span></label>");
+
+				$switcher.html(html.join(""));
+
+				var $otherToolbarItems = $toolbar.find(".tablesaw-advance").eq(0);
+				if ($otherToolbarItems.length) {
+					$switcher.insertBefore($otherToolbarItems);
+				} else {
+					$switcher.appendTo($toolbar);
+				}
+
+				$switcher.find(".tablesaw-btn").tablesawbtn();
+				$switcher.find("select").on("change", function (event) {
+					return S.onModeChange.call(table, event, $(this).val());
+				});
+			},
+			onModeChange: function (event, val) {
+				var $table = $(this);
+				var tblsaw = $table.data("tablesaw");
+				var $switcher = tblsaw.$toolbar.find("." + S.classes.main);
+
+				$switcher.remove();
+				tblsaw.destroy();
+
+				$table.attr("data-tablesaw-mode", val);
+				$table.tablesaw();
+			}
+		};
+
+		$(win.document).on(Tablesaw.events.create, function (e, Tablesaw) {
+			if (Tablesaw.$table.is(S.selectors.init)) {
+				S.init(Tablesaw.table);
+			}
+		});
+
+		// TODO OOP this and add to Tablesaw object
+	})();
+
+	(function () {
+		var pluginName = "tablesawCheckAll";
+
+		function CheckAll(tablesaw) {
+			this.tablesaw = tablesaw;
+			this.$table = tablesaw.$table;
+
+			this.attr = "data-tablesaw-checkall";
+			this.checkAllSelector = "[" + this.attr + "]";
+			this.forceCheckedSelector = "[" + this.attr + "-checked]";
+			this.forceUncheckedSelector = "[" + this.attr + "-unchecked]";
+			this.checkboxSelector = 'input[type="checkbox"]';
+
+			this.$triggers = null;
+			this.$checkboxes = null;
+
+			if (this.$table.data(pluginName)) {
+				return;
+			}
+			this.$table.data(pluginName, this);
+			this.init();
+		}
+
+		CheckAll.prototype._filterCells = function ($checkboxes) {
+			return $checkboxes.filter(function () {
+				return !$(this).closest("tr").is("[data-tablesaw-subrow],[data-tablesaw-ignorerow]");
+			}).find(this.checkboxSelector).not(this.checkAllSelector);
+		};
+
+		// With buttons you can use a scoping selector like: data-tablesaw-checkall="#my-scoped-id input[type='checkbox']"
+		CheckAll.prototype.getCheckboxesForButton = function (button) {
+			return this._filterCells($($(button).attr(this.attr)));
+		};
+
+		CheckAll.prototype.getCheckboxesForCheckbox = function (checkbox) {
+			return this._filterCells($($(checkbox).closest("th")[0].cells));
+		};
+
+		CheckAll.prototype.init = function () {
+			var self = this;
+			this.$table.find(this.checkAllSelector).each(function () {
+				var $trigger = $(this);
+				if ($trigger.is(self.checkboxSelector)) {
+					self.addCheckboxEvents(this);
+				} else {
+					self.addButtonEvents(this);
+				}
+			});
+		};
+
+		CheckAll.prototype.addButtonEvents = function (trigger) {
+			var self = this;
+
+			// Update body checkboxes when header checkbox is changed
+			$(trigger).on("click", function (event) {
+				event.preventDefault();
+
+				var $checkboxes = self.getCheckboxesForButton(this);
+
+				var allChecked = true;
+				$checkboxes.each(function () {
+					if (!this.checked) {
+						allChecked = false;
+					}
+				});
+
+				var setChecked;
+				if ($(this).is(self.forceCheckedSelector)) {
+					setChecked = true;
+				} else if ($(this).is(self.forceUncheckedSelector)) {
+					setChecked = false;
+				} else {
+					setChecked = allChecked ? false : true;
+				}
+
+				$checkboxes.each(function () {
+					this.checked = setChecked;
+
+					$(this).trigger("change." + pluginName);
+				});
+			});
+		};
+
+		CheckAll.prototype.addCheckboxEvents = function (trigger) {
+			var self = this;
+
+			// Update body checkboxes when header checkbox is changed
+			$(trigger).on("change", function () {
+				var setChecked = this.checked;
+
+				self.getCheckboxesForCheckbox(this).each(function () {
+					this.checked = setChecked;
+				});
+			});
+
+			var $checkboxes = self.getCheckboxesForCheckbox(trigger);
+
+			// Update header checkbox when body checkboxes are changed
+			$checkboxes.on("change." + pluginName, function () {
+				var checkedCount = 0;
+				$checkboxes.each(function () {
+					if (this.checked) {
+						checkedCount++;
+					}
+				});
+
+				var allSelected = checkedCount === $checkboxes.length;
+
+				trigger.checked = allSelected;
+
+				// only indeterminate if some are selected (not all and not none)
+				trigger.indeterminate = checkedCount !== 0 && !allSelected;
+			});
+		};
+
+		// on tablecreate, init
+		$(document).on(Tablesaw.events.create, function (e, tablesaw) {
+			new CheckAll(tablesaw);
+		});
+
+		Tablesaw.CheckAll = CheckAll;
+	})();
+
+	return Tablesaw;
+});
+
+/***/ }),
+
+/***/ 46:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(58);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(52)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./tablesaw.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./tablesaw.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 51:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function () {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for (var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if (item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function (modules, mediaQuery) {
+		if (typeof modules === "string") modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for (var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if (typeof id === "number") alreadyImportedModules[id] = true;
+		}
+		for (i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if (mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if (mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+/***/ }),
+
+/***/ 52:
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+var stylesInDom = {},
+	memoize = function(fn) {
+		var memo;
+		return function () {
+			if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+			return memo;
+		};
+	},
+	isOldIE = memoize(function() {
+		return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
+	}),
+	getHeadElement = memoize(function () {
+		return document.head || document.getElementsByTagName("head")[0];
+	}),
+	singletonElement = null,
+	singletonCounter = 0,
+	styleElementsInsertedAtTop = [];
+
+module.exports = function(list, options) {
+	if(typeof DEBUG !== "undefined" && DEBUG) {
+		if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the bottom of <head>.
+	if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+	var styles = listToStyles(list);
+	addStylesToDom(styles, options);
+
+	return function update(newList) {
+		var mayRemove = [];
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+		if(newList) {
+			var newStyles = listToStyles(newList);
+			addStylesToDom(newStyles, options);
+		}
+		for(var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+			if(domStyle.refs === 0) {
+				for(var j = 0; j < domStyle.parts.length; j++)
+					domStyle.parts[j]();
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+}
+
+function addStylesToDom(styles, options) {
+	for(var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+		if(domStyle) {
+			domStyle.refs++;
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles(list) {
+	var styles = [];
+	var newStyles = {};
+	for(var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+		if(!newStyles[id])
+			styles.push(newStyles[id] = {id: id, parts: [part]});
+		else
+			newStyles[id].parts.push(part);
+	}
+	return styles;
+}
+
+function insertStyleElement(options, styleElement) {
+	var head = getHeadElement();
+	var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+	if (options.insertAt === "top") {
+		if(!lastStyleElementInsertedAtTop) {
+			head.insertBefore(styleElement, head.firstChild);
+		} else if(lastStyleElementInsertedAtTop.nextSibling) {
+			head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			head.appendChild(styleElement);
+		}
+		styleElementsInsertedAtTop.push(styleElement);
+	} else if (options.insertAt === "bottom") {
+		head.appendChild(styleElement);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement(styleElement) {
+	styleElement.parentNode.removeChild(styleElement);
+	var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+	if(idx >= 0) {
+		styleElementsInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement(options) {
+	var styleElement = document.createElement("style");
+	styleElement.type = "text/css";
+	insertStyleElement(options, styleElement);
+	return styleElement;
+}
+
+function createLinkElement(options) {
+	var linkElement = document.createElement("link");
+	linkElement.rel = "stylesheet";
+	insertStyleElement(options, linkElement);
+	return linkElement;
+}
+
+function addStyle(obj, options) {
+	var styleElement, update, remove;
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+		styleElement = singletonElement || (singletonElement = createStyleElement(options));
+		update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+	} else if(obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function") {
+		styleElement = createLinkElement(options);
+		update = updateLink.bind(null, styleElement);
+		remove = function() {
+			removeStyleElement(styleElement);
+			if(styleElement.href)
+				URL.revokeObjectURL(styleElement.href);
+		};
+	} else {
+		styleElement = createStyleElement(options);
+		update = applyToTag.bind(null, styleElement);
+		remove = function() {
+			removeStyleElement(styleElement);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle(newObj) {
+		if(newObj) {
+			if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+				return;
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag(styleElement, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = styleElement.childNodes;
+		if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+		if (childNodes.length) {
+			styleElement.insertBefore(cssNode, childNodes[index]);
+		} else {
+			styleElement.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag(styleElement, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		styleElement.setAttribute("media", media)
+	}
+
+	if(styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = css;
+	} else {
+		while(styleElement.firstChild) {
+			styleElement.removeChild(styleElement.firstChild);
+		}
+		styleElement.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink(linkElement, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	if(sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = linkElement.href;
+
+	linkElement.href = URL.createObjectURL(blob);
+
+	if(oldSrc)
+		URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+
+/***/ 58:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(51)();
+// imports
+
+
+// module
+exports.push([module.i, "/*! Tablesaw - v3.0.6 - 2017-11-20\n* https://github.com/filamentgroup/tablesaw\n* Copyright (c) 2017 Filament Group; Licensed MIT */\n\n.tablesaw {\n  width: 100%;\n  max-width: 100%;\n  empty-cells: show;\n  border-collapse: collapse;\n  border: 0;\n  padding: 0;\n}\n\n.tablesaw * {\n  box-sizing: border-box;\n}\n\n.tablesaw-btn {\n  border: 1px solid #ccc;\n  border-radius: .25em;\n  background: none;\n  box-shadow: 0 1px 0 rgba(255,255,255,1);\n  color: #4a4a4a;\n  cursor: pointer;\n  display: inline-block;\n  margin: 0;\n  padding: .5em .85em .4em .85em;\n  position: relative;\n  text-align: center;\n  text-decoration: none;\n  text-transform: capitalize;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n}\n\na.tablesaw-btn {\n  color: #1c95d4;\n}\n\n.tablesaw-btn:hover {\n  text-decoration: none;\n}\n\n/* Default radio/checkbox styling horizonal controlgroups. */\n\n.tablesaw-btn:active {\n  background-color: #ddd;\n}\n\n@supports (box-shadow: none ) {\n  .tablesaw-btn:focus {\n    background-color: #fff;\n    outline: none;\n  }\n\n  .tablesaw-btn:focus {\n    box-shadow: 0 0 .35em #4faeef !important;\n  }\n}\n\n.tablesaw-btn-select select {\n  background: none;\n  border: none;\n  display: inline-block;\n  position: absolute;\n  left: 0;\n  top: 0;\n  margin: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 2;\n  min-height: 1em;\n  opacity: 0;\n  color: transparent;\n}\n\n.tablesaw-btn select option {\n  background: #fff;\n  color: #000;\n}\n\n.tablesaw-btn {\n  display: inline-block;\n  width: auto;\n  height: auto;\n  position: relative;\n  top: 0;\n}\n\n.tablesaw-btn.btn-small {\n  font-size: 1.0625em;\n  line-height: 19px;\n  padding: .3em 1em .3em 1em;\n}\n\n.tablesaw-btn.btn-micro {\n  font-size: .8125em;\n  padding: .4em .7em .25em .7em;\n}\n\n.tablesaw-btn-select {\n  padding-right: 1.5em;\n  text-align: left;\n  display: inline-block;\n  color: #4d4d4d;\n  padding-right: 2.5em;\n  min-width: 7.25em;\n  text-align: left;\n}\n\n.tablesaw-btn-select:after {\n  content: \" \";\n  position: absolute;\n  background: none;\n  background-repeat: no-repeat;\n  background-position: .25em .45em;\n  content: \"\\25BC\";\n  font-size: .55em;\n  padding-top: 1.2em;\n  padding-left: 1em;\n  left: auto;\n  right: 0;\n  margin: 0;\n  top: 0;\n  bottom: 0;\n  width: 1.8em;\n}\n\n.tablesaw-btn-select.btn-small:after,\n.tablesaw-btn-select.btn-micro:after {\n  width: 1.2em;\n  font-size: .5em;\n  padding-top: 1em;\n  padding-right: .5em;\n  line-height: 1.65;\n  background: none;\n  box-shadow: none;\n  border-left-width: 0;\n}\n\n/* Column navigation buttons for swipe and columntoggle tables */\n\n.tablesaw-advance .tablesaw-btn {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  box-sizing: border-box;\n  text-shadow: 0 1px 0 #fff;\n  border-radius: .25em;\n}\n\n.tablesaw-advance .tablesaw-btn.btn-micro {\n  font-size: .8125em;\n  padding: .3em .7em .25em .7em;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn:first-child {\n  margin-left: 0;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn:last-child {\n  margin-right: 0;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn {\n  display: inline-block;\n  overflow: hidden;\n  width: 1.8em;\n  height: 1.8em;\n  background-position: 50% 50%;\n  margin-left: .25em;\n  margin-right: .25em;\n  position: relative;\n  text-indent: -9999px;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.left:before,\n.tablesaw-advance a.tablesaw-nav-btn.right:before,\n.tablesaw-advance a.tablesaw-nav-btn.down:before,\n.tablesaw-advance a.tablesaw-nav-btn.up:before {\n  content: \" \";\n  overflow: hidden;\n  width: 0;\n  height: 0;\n  position: absolute;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.down:before {\n  left: .5em;\n  top: .65em;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n  border-top: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.up:before {\n  left: .5em;\n  top: .65em;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n  border-bottom: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.left:before,\n.tablesaw-advance a.tablesaw-nav-btn.right:before {\n  top: .45em;\n  border-top: 5px solid transparent;\n  border-bottom: 5px solid transparent;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.left:before {\n  left: .6em;\n  border-right: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.right:before {\n  left: .7em;\n  border-left: 5px solid #808080;\n}\n\n.tablesaw-advance a.tablesaw-nav-btn.disabled {\n  opacity: .25;\n  cursor: default;\n  pointer-events: none;\n}\n\n/* Table Toolbar */\n\n.tablesaw-bar {\n  clear: both;\n}\n\n.tablesaw-bar * {\n  box-sizing: border-box;\n}\n\n.tablesaw-bar-section {\n  float: left;\n}\n\n.tablesaw-bar-section label {\n  font-size: .875em;\n  padding: .5em 0;\n  clear: both;\n  display: block;\n  color: #888;\n  margin-right: .5em;\n  text-transform: uppercase;\n}\n\n.tablesaw-btn,\n.tablesaw-enhanced .tablesaw-btn {\n  margin-top: .5em;\n  margin-bottom: .5em;\n}\n\n.tablesaw-btn-select,\n.tablesaw-enhanced .tablesaw-btn-select {\n  margin-bottom: 0;\n}\n\n/* TODO */\n\n.tablesaw-bar .tablesaw-bar-section .tablesaw-btn {\n  margin-left: .4em;\n  margin-top: 0;\n  text-transform: uppercase;\n  border: none;\n  box-shadow: none;\n  background: transparent;\n  font-size: 1em;\n  padding-left: .3em;\n}\n\n.tablesaw-bar .tablesaw-bar-section .btn-select {\n  min-width: 0;\n}\n\n.tablesaw-bar .tablesaw-bar-section .btn-select:after {\n  padding-top: .9em;\n}\n\n.tablesaw-bar .tablesaw-bar-section select {\n  color: #888;\n  text-transform: none;\n  background: transparent;\n}\n\n.tablesaw-bar-section ~ table {\n  clear: both;\n}\n\n.tablesaw-bar-section .abbreviated {\n  display: inline;\n}\n\n.tablesaw-bar-section .longform {\n  display: none;\n}\n\n@media (min-width: 24em) {\n  .tablesaw-bar-section .abbreviated {\n    display: none;\n  }\n\n  .tablesaw-bar-section .longform {\n    display: inline;\n  }\n}\n\n.tablesaw th,\n.tablesaw td {\n  padding: .5em .7em;\n  text-align: left;\n  vertical-align: middle;\n}\n\n.tablesaw-sortable-btn {\n  /* same as cell padding above */\n  padding: .5em .7em;\n}\n\n.tablesaw thead th {\n  text-align: left;\n}\n\n/* Table rows have a gray bottom stroke by default */\n\n.tablesaw-row-border tr {\n  border-bottom: 1px solid #dfdfdf;\n}\n\n/* Zebra striping */\n\n.tablesaw-row-zebra tr:nth-child(2n) {\n  background-color: #f8f8f8;\n}\n\n.tablesaw caption {\n  text-align: left;\n  margin: .59375em 0;\n}\n\n.tablesaw-swipe .tablesaw-swipe-cellpersist {\n  border-right: 2px solid #e4e1de;\n}\n\n.tablesaw-swipe-shadow .tablesaw-swipe-cellpersist {\n  border-right-width: 1px;\n}\n\n.tablesaw-swipe-shadow .tablesaw-swipe-cellpersist {\n  box-shadow: 3px 0 4px -1px #e4e1de;\n}\n\n.tablesaw-stack td .tablesaw-cell-label,\n.tablesaw-stack th .tablesaw-cell-label {\n  display: none;\n}\n\n/* Mobile first styles: Begin with the stacked presentation at narrow widths */\n\n/* Support note IE9+: @media only all */\n\n@media only all {\n  /* Show the table cells as a block level element */\n\n  .tablesaw-stack {\n    clear: both;\n  }\n\n  .tablesaw-stack td,\n  .tablesaw-stack th {\n    text-align: left;\n    display: block;\n  }\n\n  .tablesaw-stack tr {\n    clear: both;\n    display: table-row;\n  }\n\n  /* Make the label elements a percentage width */\n\n  .tablesaw-stack td .tablesaw-cell-label,\n  .tablesaw-stack th .tablesaw-cell-label {\n    display: inline-block;\n    padding: 0 .6em 0 0;\n    width: 30%;\n  }\n\n  /* For grouped headers, have a different style to visually separate the levels by classing the first label in each col group */\n\n  .tablesaw-stack th .tablesaw-cell-label-top,\n  .tablesaw-stack td .tablesaw-cell-label-top {\n    display: block;\n    padding: .4em 0;\n    margin: .4em 0;\n  }\n\n  .tablesaw-cell-label {\n    display: block;\n  }\n\n  /* Avoid double strokes when stacked */\n\n  .tablesaw-stack tbody th.group {\n    margin-top: -1px;\n  }\n\n  /* Avoid double strokes when stacked */\n\n  .tablesaw-stack th.group b.tablesaw-cell-label {\n    display: none !important;\n  }\n}\n\n@media (max-width: 39.9375em) {\n  /* Table rows have a gray bottom stroke by default */\n\n  .tablesaw-stack tbody tr {\n    display: block;\n    width: 100%;\n    border-bottom: 1px solid #dfdfdf;\n  }\n\n  .tablesaw-stack thead td,\n  .tablesaw-stack thead th {\n    display: none;\n  }\n\n  .tablesaw-stack tbody td,\n  .tablesaw-stack tbody th {\n    display: block;\n    float: left;\n    clear: left;\n    width: 100%;\n  }\n\n  .tablesaw-cell-label {\n    vertical-align: top;\n  }\n\n  .tablesaw-cell-content {\n    display: inline-block;\n    max-width: 67%;\n  }\n\n  .tablesaw-stack .tablesaw-stack-block .tablesaw-cell-label,\n  .tablesaw-stack .tablesaw-stack-block .tablesaw-cell-content {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n    padding: 0;\n  }\n\n  .tablesaw-stack td:empty,\n  .tablesaw-stack th:empty {\n    display: none;\n  }\n}\n\n/* Media query to show as a standard table at 560px (35em x 16px) or wider */\n\n@media (min-width: 40em) {\n  .tablesaw-stack tr {\n    display: table-row;\n  }\n\n  /* Show the table header rows */\n\n  .tablesaw-stack td,\n  .tablesaw-stack th,\n  .tablesaw-stack thead td,\n  .tablesaw-stack thead th {\n    display: table-cell;\n    margin: 0;\n  }\n\n  /* Hide the labels in each cell */\n\n  .tablesaw-stack td .tablesaw-cell-label,\n  .tablesaw-stack th .tablesaw-cell-label {\n    display: none !important;\n  }\n}\n\n.tablesaw-fix-persist {\n  table-layout: fixed;\n}\n\n@media only all {\n  /* Unchecked manually: Always hide */\n\n  .tablesaw-swipe th.tablesaw-swipe-cellhidden,\n  .tablesaw-swipe td.tablesaw-swipe-cellhidden {\n    display: none;\n  }\n}\n\n.tablesaw-overflow {\n  position: relative;\n  width: 100%;\n  overflow-x: auto;\n  -webkit-overflow-scrolling: touch;\n  /* More in skin.css */\n}\n\n.tablesaw-overflow > .tablesaw {\n  margin-top: 2px;\n  /* sortable focus rings are clipped */\n}\n\n/* Used for a11y text on button: \"Columns\" */\n\n.tablesaw-columntoggle-btn span {\n  text-indent: -9999px;\n  display: inline-block;\n}\n\n.tablesaw-columntoggle-btnwrap {\n  position: relative;\n  /* for dialog positioning */\n}\n\n.tablesaw-columntoggle-btnwrap .dialog-content {\n  padding: .5em;\n}\n\n.tablesaw-columntoggle tbody td {\n  line-height: 1.5;\n}\n\n/* Remove top/bottom margins around the fieldcontain on check list */\n\n.tablesaw-columntoggle-popup {\n  display: none;\n}\n\n.tablesaw-columntoggle-btnwrap.visible .tablesaw-columntoggle-popup {\n  display: block;\n  position: absolute;\n  top: 2em;\n  right: 0;\n  background-color: #fff;\n  padding: .5em .8em;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 2px #ccc;\n  border-radius: .2em;\n  z-index: 1;\n}\n\n.tablesaw-columntoggle-popup fieldset {\n  margin: 0;\n}\n\n/* Hide all prioritized columns by default */\n\n@media only all {\n  .tablesaw-columntoggle th.tablesaw-priority-6,\n  .tablesaw-columntoggle td.tablesaw-priority-6,\n  .tablesaw-columntoggle th.tablesaw-priority-5,\n  .tablesaw-columntoggle td.tablesaw-priority-5,\n  .tablesaw-columntoggle th.tablesaw-priority-4,\n  .tablesaw-columntoggle td.tablesaw-priority-4,\n  .tablesaw-columntoggle th.tablesaw-priority-3,\n  .tablesaw-columntoggle td.tablesaw-priority-3,\n  .tablesaw-columntoggle th.tablesaw-priority-2,\n  .tablesaw-columntoggle td.tablesaw-priority-2,\n  .tablesaw-columntoggle th.tablesaw-priority-1,\n  .tablesaw-columntoggle td.tablesaw-priority-1,\n  .tablesaw-columntoggle th.tablesaw-priority-0,\n  .tablesaw-columntoggle td.tablesaw-priority-0 {\n    display: none;\n  }\n}\n\n.tablesaw-columntoggle-btnwrap .dialog-content {\n  top: 0 !important;\n  right: 1em;\n  left: auto !important;\n  width: 12em;\n  max-width: 18em;\n  margin: -.5em auto 0;\n}\n\n.tablesaw-columntoggle-btnwrap .dialog-content:focus {\n  outline-style: none;\n}\n\n/* Preset breakpoints if \"\" class added to table */\n\n/* Show priority 1 at 320px (20em x 16px) */\n\n@media (min-width: 20em) {\n  .tablesaw-columntoggle th.tablesaw-priority-1,\n  .tablesaw-columntoggle td.tablesaw-priority-1 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 2 at 480px (30em x 16px) */\n\n@media (min-width: 30em) {\n  .tablesaw-columntoggle th.tablesaw-priority-2,\n  .tablesaw-columntoggle td.tablesaw-priority-2 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 3 at 640px (40em x 16px) */\n\n@media (min-width: 40em) {\n  .tablesaw-columntoggle th.tablesaw-priority-3,\n  .tablesaw-columntoggle td.tablesaw-priority-3 {\n    display: table-cell;\n  }\n\n  .tablesaw-columntoggle tbody td {\n    line-height: 2;\n  }\n}\n\n/* Show priority 4 at 800px (50em x 16px) */\n\n@media (min-width: 50em) {\n  .tablesaw-columntoggle th.tablesaw-priority-4,\n  .tablesaw-columntoggle td.tablesaw-priority-4 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 5 at 960px (60em x 16px) */\n\n@media (min-width: 60em) {\n  .tablesaw-columntoggle th.tablesaw-priority-5,\n  .tablesaw-columntoggle td.tablesaw-priority-5 {\n    display: table-cell;\n  }\n}\n\n/* Show priority 6 at 1,120px (70em x 16px) */\n\n@media (min-width: 70em) {\n  .tablesaw-columntoggle th.tablesaw-priority-6,\n  .tablesaw-columntoggle td.tablesaw-priority-6 {\n    display: table-cell;\n  }\n}\n\n@media only all {\n  /* Unchecked manually: Always hide */\n\n  .tablesaw-columntoggle th.tablesaw-toggle-cellhidden,\n  .tablesaw-columntoggle td.tablesaw-toggle-cellhidden {\n    display: none;\n  }\n\n  /* Checked manually: Always show */\n\n  .tablesaw-columntoggle th.tablesaw-toggle-cellvisible,\n  .tablesaw-columntoggle td.tablesaw-toggle-cellvisible {\n    display: table-cell;\n  }\n}\n\n.tablesaw-columntoggle-popup .btn-group > label {\n  display: block;\n  padding: .2em 0;\n  white-space: nowrap;\n  cursor: default;\n}\n\n.tablesaw-columntoggle-popup .btn-group > label input {\n  margin-right: .8em;\n}\n\n.tablesaw-sortable-head {\n  position: relative;\n  vertical-align: top;\n}\n\n/* Override */\n\n.tablesaw .tablesaw-sortable-head {\n  padding: 0;\n}\n\n.tablesaw-sortable-btn {\n  min-width: 100%;\n  color: inherit;\n  background: transparent;\n  border: 0;\n  text-align: inherit;\n  font: inherit;\n  text-transform: inherit;\n}\n\n.tablesaw-sortable-arrow:after {\n  display: inline-block;\n  width: 10px;\n  height: 14px;\n  content: \" \";\n  margin-left: .3125em;\n}\n\n.tablesaw-sortable-ascending .tablesaw-sortable-arrow:after,\n.tablesaw-sortable-descending .tablesaw-sortable-arrow:after {\n  content: \" \";\n}\n\n.tablesaw-sortable-ascending .tablesaw-sortable-arrow:after {\n  content: \"\\2191\";\n}\n\n.tablesaw-sortable-descending .tablesaw-sortable-arrow:after {\n  content: \"\\2193\";\n}\n\n.tablesaw-advance {\n  float: right;\n}\n\n.tablesaw-advance.minimap {\n  margin-right: .4em;\n}\n\n.tablesaw-advance-dots {\n  float: left;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n\n.tablesaw-advance-dots li {\n  display: table-cell;\n  margin: 0;\n  padding: .4em .2em;\n}\n\n.tablesaw-advance-dots li i {\n  width: .25em;\n  height: .25em;\n  background: #555;\n  border-radius: 100%;\n  display: inline-block;\n}\n\n.tablesaw-advance-dots-hide {\n  opacity: .25;\n  cursor: default;\n  pointer-events: none;\n}", ""]);
+
+// exports
+
+
+/***/ })
+
+});
 //# sourceMappingURL=2.chunk.js.map
